@@ -12,6 +12,8 @@ public class TimeManager : MonoBehaviour
 
     public float CurrentTime { get; private set; }
 
+    public float Flow { get; set; } = 1;
+
     private void Awake ()
     {
         if(Instance == null)
@@ -26,6 +28,6 @@ public class TimeManager : MonoBehaviour
 
     private void Update ()
     {
-        CurrentTime += Time.deltaTime;
+        CurrentTime += Time.deltaTime * Flow;
     }
 }

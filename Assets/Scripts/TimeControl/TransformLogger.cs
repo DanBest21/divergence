@@ -7,7 +7,10 @@ public class TransformLogger : MonoBehaviour
     private CircleStack<State> log = new CircleStack<State>(512);
     [SerializeField]
     private float maxErrorDistance = 0.01f;
+    [SerializeField]
+    private float maxErrorVelocity = 0.01f;
 
+    private float lastDeltaTime = 1;
 
     private struct State
     {
@@ -26,6 +29,9 @@ public class TransformLogger : MonoBehaviour
     private void Update ()
     {
         Log();
+       
+        lastDeltaTime = Time.deltaTime;
+    
     }
 
     private void Log ()
@@ -47,16 +53,11 @@ public class TransformLogger : MonoBehaviour
         }
 
         State a = log.GetRecent(1);
+
         State b = log.GetLast();
 
-        float deltaTime = newState.time - a.time;
-        float t = (b.time - a.time) / deltaTime;
-
-        Vector2 idealPos = Vector2.Lerp(a.position, newState.position, t);
-
-        float errorSqr = Vector2.SqrMagnitude(idealPos - b.position);
-
-        if(errorSqr < maxErrorDistance * maxErrorDistance)
+        if(GetErrorDistance(a.position, b.position, newState.position) < maxErrorDistance
+            && GetErrorVelocity(a, b, newState) < maxErrorVelocity) 
         {
             log.RemoveLast();
         }
@@ -64,6 +65,21 @@ public class TransformLogger : MonoBehaviour
         log.Add(newState);
 
 
+    }
+
+    float GetErrorDistance (Vector2 a, Vector2 b, Vector2 c)
+    {
+        return Vector3.Cross(c - a, b - a).magnitude;
+    }
+
+    float GetErrorVelocity (State a, State b, State c)
+    {
+        return Vector2.Distance(GetVelocity(a, b), GetVelocity(a, c));
+    }
+
+    Vector2 GetVelocity (State a, State b)
+    {
+        return (b.position - a.position) / (b.time - a.time);
     }
 
     private void OnDrawGizmosSelected ()

@@ -32,6 +32,10 @@ public class PlayerMovement : MonoBehaviour
             input = input.normalized;
         }
 
+        Vector3 velocity = input * speed;
+
+        transform.position = transform.position + (velocity * Time.deltaTime);
+
         UpdateLookRotation();
     }
 
@@ -42,10 +46,5 @@ public class PlayerMovement : MonoBehaviour
         float angle = Vector2.SignedAngle(Vector2.up, mousePos - transform.position);
 
         transform.rotation = Quaternion.Euler(0, 0, angle);
-    }
-
-    private void FixedUpdate ()
-    {
-        rb.velocity = input * speed;
     }
 }
