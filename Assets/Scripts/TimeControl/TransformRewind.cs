@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransformLogger : MonoBehaviour
+public class TransformRewind : MonoBehaviour
 {
     private CircleStack<State> log = new CircleStack<State>(512);
     [SerializeField]
     private float maxErrorDistance = 0.01f;
     [SerializeField]
     private float maxErrorVelocity = 0.01f;
-
-    private float lastDeltaTime = 1;
 
     private struct State
     {
@@ -24,14 +22,9 @@ public class TransformLogger : MonoBehaviour
         }
     }
 
-   
-
     private void LateUpdate ()
     {
         Log();
-       
-        lastDeltaTime = Time.deltaTime;
-    
     }
 
     private void Log ()
@@ -63,7 +56,6 @@ public class TransformLogger : MonoBehaviour
         }
 
         log.Add(newState);
-
 
     }
 

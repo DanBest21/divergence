@@ -30,4 +30,9 @@ public class TimeManager : MonoBehaviour
     {
         CurrentTime += Time.deltaTime * Flow;
     }
+
+    private void OnDestroy ()
+    {
+        Instance = null;
+    }
 }

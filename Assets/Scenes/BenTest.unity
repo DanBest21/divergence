@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 397630183}
   - component: {fileID: 397630182}
   m_Layer: 0
-  m_Name: TimeManager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e7108893bf24346b76c2847675a827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLogTime: 5
+  maxLogTime: 30
 --- !u!4 &397630183
 Transform:
   m_ObjectHideFlags: 0
@@ -399,7 +399,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be90e4b5a3f8e2a41ac0fad2e46be628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxErrorDistance: 0.08
+  maxErrorDistance: 0.01
+  maxErrorVelocity: 0.01
 --- !u!1 &1879406559
 GameObject:
   m_ObjectHideFlags: 0
