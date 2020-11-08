@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
@@ -14,6 +13,12 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private float speed = 3;
+
+    [SerializeField]
+    private float collisionRadius = 1;
+
+    [SerializeField]
+    private float skinWidth = 0.01f;
 
     private void Awake ()
     {
@@ -34,9 +39,34 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 velocity = input * speed;
 
-        transform.position = transform.position + (velocity * Time.deltaTime);
+        Move(velocity);
 
         UpdateLookRotation();
+    }
+
+    private void Move(Vector2 velocity)
+    {
+        Vector2 motion = velocity * Time.deltaTime;
+
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, collisionRadius, motion, motion.magnitude);
+
+        if(hit)
+        {
+            float a = velocity.x / hit.normal.x;
+            float b = velocity.y / hit.normal.y;
+
+            float free = hit.distance - skinWidth;
+            float slide = motion.magnitude - free;
+
+            motion = motion.normalized;
+
+            motion = motion * free + (Vector2)Vector3.Project(motion * slide, Vector2.Perpendicular(hit.normal));
+        }
+
+
+        transform.position = transform.position + new Vector3(motion.x, motion.y);
+
+
     }
 
     void UpdateLookRotation ()

@@ -24,16 +24,36 @@ public class NavGrid : MonoBehaviour
 
     private void Awake ()
     {
-        Instance = this;
         if(Instance != null)
         {
             Debug.LogError("Multiple NavGrids detected. Will use newest.");
         }
+        Instance = this;
+
         InitializeGrid();
     }
 
     private void InitializeGrid ()
     {
+        int width = Mathf.RoundToInt((maxX - minX) / spacing);
+        int height = Mathf.RoundToInt((maxY - minY) / spacing);
+
+        walkableNodes = new bool[width, height];
+
+        Vector2 boxSize = new Vector2(spacing * 1.1f, spacing * 1.1f);
+        int mask = LayerMask.GetMask("Solid");
+
+        for(int i = 0; i < width; i++)
+        {
+            for(int j = 0; j < height; j++)
+            {
+                Vector2 pos = GetWorldPos(i, j);
+
+                bool hit = Physics2D.OverlapBox(pos, boxSize, 0, mask);
+
+                walkableNodes[i,j] = !hit;
+            }
+        }
 
     }
 
@@ -53,5 +73,23 @@ public class NavGrid : MonoBehaviour
     private void OnDestroy ()
     {
         Instance = null;
+    }
+
+    private void OnDrawGizmosSelected ()
+    {
+        if(walkableNodes != null)
+        {
+            for(int i = 0; i < walkableNodes.GetLength(0); i++)
+            {
+                for(int j = 0; j < walkableNodes.GetLength(1); j++)
+                {
+                    Vector2 pos = GetWorldPos(i, j);
+
+                    Gizmos.color = walkableNodes[i,j] ? Color.white : Color.red;
+                    Gizmos.DrawSphere(pos, 0.2f);
+                }
+            }
+
+        }
     }
 }
