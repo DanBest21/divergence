@@ -7,7 +7,7 @@ using System;
 /// Min-Heap implementation of a priority queue
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class PriorityQueue<T> : MonoBehaviour
+public class PriorityQueue<T>
 {
     Tuple<T,float>[] items;
     public int Count { get; private set; }
@@ -60,17 +60,18 @@ public class PriorityQueue<T> : MonoBehaviour
             int left = GetLeftChild(index);
             int right = GetRightChild(index);
 
-            if(left < Count && left < lowest)
+            if(left < Count && items[left].Item2 < lowest)
             {
                 lowest = left;
             }
-            if(right < Count && right < lowest)
+            if(right < Count && items[right].Item2 < lowest)
             {
                 lowest = right;
             }
             if(lowest != index)
             {
                 Swap(lowest, index);
+                index = lowest;
             }
             else
             {

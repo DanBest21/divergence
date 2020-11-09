@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class NavGrid : MonoBehaviour
 {
-    public NavGrid Instance { get; private set; }
+    public static NavGrid Instance { get; private set; }
 
     [SerializeField]
     private float minX = -100;
@@ -18,6 +19,9 @@ public class NavGrid : MonoBehaviour
 
     [SerializeField]
     private float spacing = 1;
+
+    [SerializeField]
+    private float collisionTestSize = 0.8f;
 
 
     bool[,] walkableNodes;
@@ -40,7 +44,7 @@ public class NavGrid : MonoBehaviour
 
         walkableNodes = new bool[width, height];
 
-        Vector2 boxSize = new Vector2(spacing * 1.1f, spacing * 1.1f);
+        Vector2 boxSize = new Vector2(spacing, spacing) * collisionTestSize;
         int mask = LayerMask.GetMask("Solid");
 
         for(int i = 0; i < width; i++)
@@ -91,5 +95,25 @@ public class NavGrid : MonoBehaviour
             }
 
         }
+    }
+
+    public Vector2[] GetPath (Vector2 start, Vector2 target)
+    {
+        Vector2Int startIndex = GetIndices(start);
+        Vector2Int destIndices = GetIndices(target);
+
+        AStar pathFinder = new AStar(walkableNodes, startIndex, destIndices);
+        List<Vector2Int> pathIndices = pathFinder.GetPath();
+
+        if(pathIndices == null)
+        {
+            return null;
+        }
+
+        Vector2[] path = pathIndices.Select(i => GetWorldPos(i.x, i.y)).ToArray();
+        path[0] = start;
+        path[path.Length - 1] = target;
+
+        return path;
     }
 }

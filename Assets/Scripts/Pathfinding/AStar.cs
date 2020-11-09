@@ -93,6 +93,7 @@ class AStar
     private bool FindPath ()
     {
         queue.Enqueue(start, 0);
+        gScores[start.x, start.y] = 0;
         Vector2Int node;
 
 
@@ -123,7 +124,7 @@ class AStar
                         gScores[neighbour.x, neighbour.y] = gScore;
                         cameFrom[neighbour.x, neighbour.y] = node;
                         float fScore = gScore + Distance(neighbour);
-                        queue.Enqueue(neighbour, fScore);
+                        queue.Enqueue(neighbour, -fScore);
                     }
                 }
             }
