@@ -32,7 +32,7 @@ public class PriorityQueue<T>
         {
             int parentIndex = GetParent(currentIndex);
 
-            if(items[parentIndex].Item2 < items[currentIndex].Item2)
+            if(items[parentIndex].Item2 > items[currentIndex].Item2)
             {
                 Swap(currentIndex, parentIndex);
             }
@@ -60,11 +60,11 @@ public class PriorityQueue<T>
             int left = GetLeftChild(index);
             int right = GetRightChild(index);
 
-            if(left < Count && items[left].Item2 < lowest)
+            if(left < Count && items[left].Item2 < items[lowest].Item2)
             {
                 lowest = left;
             }
-            if(right < Count && items[right].Item2 < lowest)
+            if(right < Count && items[right].Item2 < items[lowest].Item2)
             {
                 lowest = right;
             }

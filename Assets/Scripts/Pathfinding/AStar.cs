@@ -57,7 +57,7 @@ class AStar
 
         cameFrom = new Vector2Int[x, y];
         visited = new bool[x, y];
-        queue = new PriorityQueue<Vector2Int>(x * y / 2);
+        queue = new PriorityQueue<Vector2Int>(64);
     }
 
     public List<Vector2Int> GetPath ()
@@ -124,7 +124,7 @@ class AStar
                         gScores[neighbour.x, neighbour.y] = gScore;
                         cameFrom[neighbour.x, neighbour.y] = node;
                         float fScore = gScore + Distance(neighbour);
-                        queue.Enqueue(neighbour, -fScore);
+                        queue.Enqueue(neighbour, fScore);
                     }
                 }
             }
