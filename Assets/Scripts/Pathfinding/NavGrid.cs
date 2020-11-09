@@ -74,6 +74,31 @@ public class NavGrid : MonoBehaviour
         return new Vector2Int(x, y);
     }
 
+    private Vector2Int GetWalkableIndices (Vector2 worldPos)
+    {
+        Vector2Int closest = GetIndices(worldPos);
+
+        if(walkableNodes[closest.x, closest.y])
+        {
+            return closest;
+        }
+        Vector2Int[] neighours = new Vector2Int[]
+            {
+                closest + new Vector2Int(-1,-1), //Diagonal
+                closest + new Vector2Int(-1, 1), //Diagonal
+                closest + new Vector2Int(-1, 0),
+                closest + new Vector2Int(0,-1),
+                closest + new Vector2Int(0, 1),
+                closest + new Vector2Int(1,-1), //Diagonal
+                closest + new Vector2Int(1, 1), //Diagonal
+                closest + new Vector2Int(1, 0),
+            };
+
+        return neighours.Where(n => walkableNodes[n.x, n.y])
+            .OrderBy(n => (worldPos - GetWorldPos(n.x, n.y)).sqrMagnitude)
+            .First();
+    }
+
     private void OnDestroy ()
     {
         Instance = null;
@@ -99,8 +124,8 @@ public class NavGrid : MonoBehaviour
 
     public Vector2[] GetPath (Vector2 start, Vector2 target)
     {
-        Vector2Int startIndex = GetIndices(start);
-        Vector2Int destIndices = GetIndices(target);
+        Vector2Int startIndex = GetWalkableIndices(start);
+        Vector2Int destIndices = GetWalkableIndices(target);
 
         AStar pathFinder = new AStar(walkableNodes, startIndex, destIndices);
         List<Vector2Int> pathIndices = pathFinder.GetPath();
