@@ -21,18 +21,20 @@ class AStar
 
     List<Vector2Int> path;
 
+    private float minDistance;
+
     private static readonly Vector2Int[] offsets = new Vector2Int[]
         {
-            new Vector2Int(-1,-1), //Diagonal
-            new Vector2Int(-1, 1), //Diagonal
-            new Vector2Int(-1, 0),
+            new Vector2Int(-1, 0), //Right
 
-            new Vector2Int(0,-1),
-            new Vector2Int(0, 1),
+            new Vector2Int(0,-1), //Down
+            new Vector2Int(0, 1), //Up
+            new Vector2Int(1, 0), //Left
 
             new Vector2Int(1,-1), //Diagonal
             new Vector2Int(1, 1), //Diagonal
-            new Vector2Int(1, 0),
+            new Vector2Int(-1,-1), //Diagonal
+            new Vector2Int(-1, 1), //Diagonal
         };
 
 
@@ -58,6 +60,7 @@ class AStar
         cameFrom = new Vector2Int[x, y];
         visited = new bool[x, y];
         queue = new PriorityQueue<Vector2Int>(64);
+        minDistance = Vector2.Distance(start, dest);
     }
 
     public List<Vector2Int> GetPath ()
@@ -112,12 +115,14 @@ class AStar
 
             visited[node.x, node.y] = true;
 
-            foreach(var offset in offsets)
+            for(int i = 0; i < offsets.Length; i++)
             {
+                var offset = offsets[i];
+
                 Vector2Int neighbour = node + offset;
                 if(InBounds(neighbour) && walkable[neighbour.x, neighbour.y] && !visited[neighbour.x, neighbour.y])
                 {
-                    float gScore = gScores[node.x, node.y] + offset.magnitude;
+                    float gScore = gScores[node.x, node.y] + offset.magnitude + offset.x * 0.1f + offset.y * 0.01f;
 
                     if(gScore < gScores[neighbour.x, neighbour.y])
                     {
