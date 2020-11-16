@@ -14,7 +14,9 @@ GameObject:
   - component: {fileID: 705852952566447676}
   - component: {fileID: 705852952566447619}
   - component: {fileID: 705852952566447618}
-  m_Layer: 0
+  - component: {fileID: -5231898543639123658}
+  - component: {fileID: -1270394371064662585}
+  m_Layer: 11
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +94,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705852952566447617}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be90e4b5a3f8e2a41ac0fad2e46be628, type: 3}
   m_Name: 
@@ -120,7 +122,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705852952566447617}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9f8cc290e30daf4d80908816615fdd9, type: 3}
   m_Name: 
@@ -128,6 +130,53 @@ MonoBehaviour:
   mode: 3
   stationaryAngle: 0
   patrolRoute: []
+--- !u!114 &-5231898543639123658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705852952566447617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9653837a14e1954fa971f7995765d06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 10
+  viewAngle: 90
+  interestPoints:
+    serializedVersion: 2
+    m_Bits: 1024
+  obstructions:
+    serializedVersion: 2
+    m_Bits: 512
+  visiblePoints: []
+--- !u!61 &-1270394371064662585
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705852952566447617}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &705852952799084375
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,7 +189,7 @@ GameObject:
   - component: {fileID: 705852952799084371}
   - component: {fileID: 705852952799084370}
   - component: {fileID: 705852952799084369}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
