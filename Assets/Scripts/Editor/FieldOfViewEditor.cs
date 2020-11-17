@@ -12,8 +12,8 @@ public class FieldOfViewEditor : Editor
         Handles.color = Color.white;
         Handles.DrawWireDisc(fov.transform.position, Vector3.forward, fov.ViewRadius());
 
-        Vector3 initialAngle = fov.CalculateAngle(-fov.ViewAngle() / 2, false);
-        Vector3 endAngle = fov.CalculateAngle(fov.ViewAngle() / 2, false);
+        Vector3 initialAngle = fov.DirectionFromAngle(-fov.ViewAngle() / 2, false);
+        Vector3 endAngle = fov.DirectionFromAngle(fov.ViewAngle() / 2, false);
         Handles.DrawLine(fov.transform.position, fov.transform.position + initialAngle * fov.ViewRadius());
         Handles.DrawLine(fov.transform.position, fov.transform.position + endAngle * fov.ViewRadius());
 
