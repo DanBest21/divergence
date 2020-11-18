@@ -129,6 +129,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionRadius: 0.5
   skinWidth: 0.01
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &-1235300098829901278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +217,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3583fa84d929dd645bc8c2f8a627697a, type: 2}
+  - {fileID: 2100000, guid: 19e77f4da62eba4479641ec1ceadd579, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
