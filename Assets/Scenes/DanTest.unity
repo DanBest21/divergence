@@ -876,6 +876,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1235300098829901278, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
+      propertyPath: meshResolution
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -1235300098829901278, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
+      propertyPath: edgeDetectionThreshold
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -1235300098829901278, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
+      propertyPath: edgeDetectionIterations
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1945543330252939994, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
       propertyPath: m_Name
       value: Player
