@@ -133,11 +133,8 @@ public class EnemyController : MonoBehaviour
     }
 
     private void RotateToFaceMotion ()
-    {       
-        if(!transformRewind.IsEmpty())
-        {
-            transform.up = transform.position - (Vector3)transformRewind.GetLastLogPoint();
-        }
+    {
+        transform.up = transformRewind.GetSmoothedForward(transform.position, 0.3f);
     }
 
 
