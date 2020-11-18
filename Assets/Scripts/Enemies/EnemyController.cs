@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController2D))]
+[RequireComponent(typeof(TransformRewind))]
 public class EnemyController : MonoBehaviour
 {
     private CharacterController2D characterController;
+    private TransformRewind transformRewind;
 
     private enum Mode
     {
@@ -16,25 +18,44 @@ public class EnemyController : MonoBehaviour
     }
 
     [SerializeField]
-    private Mode mode = Mode.Stationary;
+    private Mode defaultMode = Mode.Stationary;
+
+    private Mode mode;
 
     [SerializeField]
     private float stationaryAngle = 0;
 
     [SerializeField]
     private List<Vector2> patrolRoute = new List<Vector2>();
+    private int patrolIndex = 0;
 
-    private int pathIndex = 0;
-    private Vector3 persuitTarget;
+    private int pathIndex = 1;
+    private Vector2 pursuitTarget = Vector2.positiveInfinity;
     private Vector2[] path;
+    private float destinationReachedTime = Mathf.Infinity;
+    [SerializeField]
+    private float destinationWaitTime = 1.5f;
+
+    [SerializeField]
+    private float patrolSpeed = 3;
+    [SerializeField]
+    private float pursuitSpeed = 5;
+
+
 
     private void Awake ()
     {
         characterController = GetComponent<CharacterController2D>();
+        transformRewind = GetComponent<TransformRewind>();
+        mode = defaultMode;
     }
 
     private void Update ()
     {
+        //DEBUG ONLY REALLY BAD CODE
+        pursuitTarget = FindObjectOfType<PlayerMovement>().transform.position;
+
+
         switch(mode)
         {
             case Mode.Dead:
@@ -46,7 +67,7 @@ public class EnemyController : MonoBehaviour
                 PatrolUpdate();
                 break;
             case Mode.Pursuing:
-                PersuitUpdate();
+                PursuitUpdate();
                 break;
             default:
                 break;
@@ -63,12 +84,60 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    void PersuitUpdate ()
+    void PursuitUpdate ()
     {
-        //DEBUG ONLY REALLY BAD CODE
-        persuitTarget = FindObjectOfType<PlayerMovement>().transform.position;
+        if(path == null || path[path.Length - 1] != pursuitTarget)
+        {
+            UpdatePath();
+        }
 
-        path = NavGrid.Instance.GetPath(transform.position, persuitTarget);
+        if(pathIndex < path.Length)
+        {
+            FollowPath();
+        }
+        else if(TimeManager.Instance.CurrentTime < destinationReachedTime)
+        {
+            destinationReachedTime = TimeManager.Instance.CurrentTime;
+        }
+        else if(TimeManager.Instance.CurrentTime > destinationReachedTime + destinationWaitTime)
+        {
+            mode = defaultMode;
+        }
+
+        RotateToFaceMotion();
+    }
+
+    private void FollowPath ()
+    {
+        Vector2 target = path[pathIndex];
+        Vector2 maxMotion = target - (Vector2)transform.position;
+        Vector2 motion = maxMotion.normalized * Mathf.Min(pursuitSpeed * Time.deltaTime, maxMotion.magnitude);
+
+        characterController.Move(motion);
+
+        if((target - (Vector2)transform.position).sqrMagnitude < 0.01f)
+        {
+            pathIndex++;
+        }
+    }
+
+    private void UpdatePath ()
+    {
+        if(pursuitTarget == Vector2.positiveInfinity)
+        {
+            return;
+        }
+        path = NavGrid.Instance.GetPath(transform.position, pursuitTarget);
+        pathIndex = 1;
+        destinationReachedTime = Mathf.Infinity;
+    }
+
+    private void RotateToFaceMotion ()
+    {       
+        if(!transformRewind.IsEmpty())
+        {
+            transform.up = transform.position - (Vector3)transformRewind.GetLastLogPoint();
+        }
     }
 
 

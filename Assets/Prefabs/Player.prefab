@@ -150,10 +150,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   visiblePoints: []
-  meshResolution: 10
+  meshResolution: 0.25
   viewMeshFilter: {fileID: 1019167918497569692}
   edgeDetectionIterations: 6
-  edgeDetectionThreshold: 0.25
+  edgeDetectionThreshold: 10
 --- !u!1 &1945543330464126893
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +308,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: af997af0e5000344e994953c3b87a294, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

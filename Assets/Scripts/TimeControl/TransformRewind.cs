@@ -59,6 +59,16 @@ public class TransformRewind : MonoBehaviour
 
     }
 
+    public bool IsEmpty ()
+    {
+        return log.IsEmpty();
+    }
+
+    public Vector2 GetLastLogPoint ()
+    {
+        return log.GetLast().position;
+    }
+
     float GetErrorDistance (Vector2 a, Vector2 b, Vector2 c)
     {
         return Vector3.Cross(c - a, b - a).magnitude;

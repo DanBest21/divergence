@@ -34,6 +34,11 @@ public class CircleStack<T>
         return buffer[top];
     }
 
+    public bool IsEmpty ()
+    {
+        return size == 0;
+    }
+
     public T GetRecent (int index)
     {
         int target = top - index;

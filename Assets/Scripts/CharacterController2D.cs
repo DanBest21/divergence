@@ -10,10 +10,13 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField]
     private float skinWidth = 0.01f;
 
+    [SerializeField]
+    private LayerMask collisionMask;
+
     public void Move (Vector2 motion)
     {
 
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, collisionRadius, motion, motion.magnitude);
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, collisionRadius, motion, motion.magnitude, collisionMask.value);
 
         if(hit)
         {
