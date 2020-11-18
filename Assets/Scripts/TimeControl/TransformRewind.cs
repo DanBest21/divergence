@@ -69,6 +69,30 @@ public class TransformRewind : MonoBehaviour
         return log.GetLast().position;
     }
 
+    public Vector2 GetSmoothedForward (Vector2 newPosition, float smoothTime)
+    {
+        if(log.Size == 0) return Vector2.zero;
+        if(log.Size < 3) return (newPosition - log.GetLast().position);
+
+        Vector2 mid = log.GetRecent(1).position;
+        Vector2 prev = log.GetRecent(2).position;
+
+        Vector2 a = mid - prev;
+        Vector2 b = newPosition - mid;
+
+        float angleA = Vector2.SignedAngle(Vector2.right, a);
+        float angleB = Vector2.SignedAngle(Vector2.right, b);
+
+        float deltaTime = TimeManager.Instance.CurrentTime - log.GetRecent(1).time;
+        float t = Mathf.Clamp01(deltaTime / smoothTime);
+
+        float tSmooth = t * t * (3f - 2f * t);
+      
+        float radian = Mathf.LerpAngle(angleA, angleB, tSmooth) * Mathf.Deg2Rad;
+
+        return new Vector2(Mathf.Cos(radian), Mathf.Sin(radian));
+    }
+
     float GetErrorDistance (Vector2 a, Vector2 b, Vector2 c)
     {
         return Vector3.Cross(c - a, b - a).magnitude;
