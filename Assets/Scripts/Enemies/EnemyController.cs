@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviour
     {
         Dead = 0,
         Stationary = 1,
-        Partrolling = 2,
+        Patrolling = 2,
         Pursuing = 3,
     }
 
@@ -23,7 +23,9 @@ public class EnemyController : MonoBehaviour
     private Mode mode;
 
     [SerializeField]
-    private float stationaryAngle = 0;
+    private Vector2 stationaryForward = Vector2.up;
+    [SerializeField]
+    private Vector2 stationaryTarget = Vector2.zero;
 
     [SerializeField]
     private List<Vector2> patrolRoute = new List<Vector2>();
@@ -40,6 +42,8 @@ public class EnemyController : MonoBehaviour
     private float patrolSpeed = 3;
     [SerializeField]
     private float pursuitSpeed = 5;
+
+    private float stationaryTolerance = 1;
 
 
 
@@ -63,7 +67,7 @@ public class EnemyController : MonoBehaviour
             case Mode.Stationary:
                 StationaryUpdate();
                 break;
-            case Mode.Partrolling:
+            case Mode.Patrolling:
                 PatrolUpdate();
                 break;
             case Mode.Pursuing:
@@ -76,24 +80,59 @@ public class EnemyController : MonoBehaviour
 
     void StationaryUpdate ()
     {
+        if(Vector2.Distance(transform.position, stationaryTarget) > stationaryTolerance)
+        {
+            if(path == null)
+            {
+                UpdatePath(stationaryTarget);
+            }
+            FollowPath(patrolSpeed);
+            RotateToFaceMotion();
+        }
+        else
+        {
+            Vector2 up = transformRewind.GetSmoothedForward((Vector2)transform.position + stationaryForward, 0.3f); ;
+            if(up == Vector2.zero)
+            {
+                up = stationaryForward;
+            }
 
+            transform.up = up;
+        }
     } 
 
     void PatrolUpdate ()
     {
+        if(patrolRoute == null || patrolRoute.Count < 2)
+        {
+            Debug.LogError("Invalid patrol route found. Please assign at least 2 points to enemy with patrol job");
+            return;
+        }
 
+        Vector2 target = patrolRoute[patrolIndex];
+
+        if(Vector2.Distance(transform.position, target) < 0.01f || path == null)
+        {
+            patrolIndex = (patrolIndex + 1) % patrolRoute.Count;
+            target = patrolRoute[patrolIndex];
+            UpdatePath(target);
+        }
+
+        FollowPath(patrolSpeed);
+
+        RotateToFaceMotion();
     }
 
     void PursuitUpdate ()
     {
-        if(path == null || path[path.Length - 1] != pursuitTarget)
+        if((path == null || path[path.Length - 1] != pursuitTarget) && pursuitTarget != Vector2.positiveInfinity)
         {
-            UpdatePath();
+            UpdatePath(pursuitTarget);
         }
 
         if(pathIndex < path.Length)
         {
-            FollowPath();
+            FollowPath(pursuitSpeed);
         }
         else if(TimeManager.Instance.CurrentTime < destinationReachedTime)
         {
@@ -107,7 +146,7 @@ public class EnemyController : MonoBehaviour
         RotateToFaceMotion();
     }
 
-    private void FollowPath ()
+    private void FollowPath (float speed)
     {
         Vector2 target = path[pathIndex];
         Vector2 maxMotion = target - (Vector2)transform.position;
@@ -118,19 +157,23 @@ public class EnemyController : MonoBehaviour
         if((target - (Vector2)transform.position).sqrMagnitude < 0.01f)
         {
             pathIndex++;
+
+            if(pathIndex == path.Length)
+            {
+                path = null;
+                pathIndex = 0;
+            }
         }
     }
 
-    private void UpdatePath ()
+    private void UpdatePath (Vector2 target)
     {
-        if(pursuitTarget == Vector2.positiveInfinity)
-        {
-            return;
-        }
-        path = NavGrid.Instance.GetPath(transform.position, pursuitTarget);
+        path = NavGrid.Instance.GetPath(transform.position, target);
         pathIndex = 1;
         destinationReachedTime = Mathf.Infinity;
     }
+
+
 
     private void RotateToFaceMotion ()
     {
