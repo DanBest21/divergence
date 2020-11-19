@@ -339,6 +339,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1447131967}
     m_Modifications:
+    - target: {fileID: 1171315982, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 705852952566447617, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -442,7 +446,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 0}
+  m_BackGroundColor: {r: 0.05660379, g: 0.05660379, b: 0.05660379, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -496,6 +500,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1447131967}
     m_Modifications:
+    - target: {fileID: 1171315982, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 705852952566447617, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: m_Name
       value: Enemy (2)
@@ -819,6 +827,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1447131967}
     m_Modifications:
+    - target: {fileID: 1171315982, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 705852952566447617, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -880,6 +892,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1235300098829901278, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
+      propertyPath: viewRadius
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -1235300098829901278, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
+      propertyPath: meshResolution
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1235300098829901278, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
+      propertyPath: edgeDetectionThreshold
+      value: 22
+      objectReference: {fileID: 0}
     - target: {fileID: 1945543330252939992, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
       propertyPath: collisionMask.m_Bits
       value: 512
