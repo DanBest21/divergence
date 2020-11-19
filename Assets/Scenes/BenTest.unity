@@ -351,6 +351,18 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
+      propertyPath: defaultMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
+      propertyPath: stationaryForward.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
+      propertyPath: stationaryForward.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 705852952566447619, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: collisionMask.m_Bits
       value: 512
@@ -931,15 +943,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: patrolRoute.Array.data[1].x
-      value: -3
-      objectReference: {fileID: 0}
-    - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
-      propertyPath: patrolRoute.Array.data[2].x
       value: -12
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
-      propertyPath: patrolRoute.Array.data[2].y
+      propertyPath: patrolRoute.Array.data[1].y
       value: -9
+      objectReference: {fileID: 0}
+    - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
+      propertyPath: patrolRoute.Array.data[2].x
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
+      propertyPath: patrolRoute.Array.data[2].y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447679, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: m_RootOrder
