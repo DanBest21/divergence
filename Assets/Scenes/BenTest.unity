@@ -921,18 +921,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1447131967}
     m_Modifications:
-    - target: {fileID: -5231898543639123658, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
-      propertyPath: viewRadius
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: -5231898543639123658, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
-      propertyPath: meshResolution
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: -5231898543639123658, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
-      propertyPath: edgeDetectionThreshold
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 705852952566447617, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -1090,5 +1078,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1945543330252939997, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
