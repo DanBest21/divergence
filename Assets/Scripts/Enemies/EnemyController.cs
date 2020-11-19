@@ -58,7 +58,10 @@ public class EnemyController : MonoBehaviour
     {
         //DEBUG ONLY REALLY BAD CODE
         pursuitTarget = FindObjectOfType<PlayerMovement>().transform.position;
-
+        if(TimeManager.Instance.Flow < 0)
+        {
+            path = null;
+        }
 
         switch(mode)
         {
@@ -80,7 +83,8 @@ public class EnemyController : MonoBehaviour
 
     void StationaryUpdate ()
     {
-        if(Vector2.Distance(transform.position, stationaryTarget) > stationaryTolerance)
+        if(Vector2.Distance(transform.position, stationaryTarget) > stationaryTolerance 
+            && TimeManager.Instance.Flow > 0)
         {
             if(path == null)
             {
@@ -110,37 +114,42 @@ public class EnemyController : MonoBehaviour
         }
 
         Vector2 target = patrolRoute[patrolIndex];
-
-        if(Vector2.Distance(transform.position, target) < 0.01f || path == null)
+        if(TimeManager.Instance.Flow > 0)
         {
-            patrolIndex = (patrolIndex + 1) % patrolRoute.Count;
-            target = patrolRoute[patrolIndex];
-            UpdatePath(target);
-        }
+            if(Vector2.Distance(transform.position, target) < 0.01f || path == null)
+            {
+                patrolIndex = (patrolIndex + 1) % patrolRoute.Count;
+                target = patrolRoute[patrolIndex];
+                UpdatePath(target);
+            }
 
-        FollowPath(patrolSpeed);
+            FollowPath(patrolSpeed);
+        }
 
         RotateToFaceMotion();
     }
 
     void PursuitUpdate ()
     {
-        if((path == null || path[path.Length - 1] != pursuitTarget) && pursuitTarget != Vector2.positiveInfinity)
+        if(TimeManager.Instance.Flow > 0)
         {
-            UpdatePath(pursuitTarget);
-        }
+            if((path == null || path[path.Length - 1] != pursuitTarget) && pursuitTarget != Vector2.positiveInfinity)
+            {
+                UpdatePath(pursuitTarget);
+            }
 
-        if(pathIndex < path.Length)
-        {
-            FollowPath(pursuitSpeed);
-        }
-        else if(TimeManager.Instance.CurrentTime < destinationReachedTime)
-        {
-            destinationReachedTime = TimeManager.Instance.CurrentTime;
-        }
-        else if(TimeManager.Instance.CurrentTime > destinationReachedTime + destinationWaitTime)
-        {
-            mode = defaultMode;
+            if(pathIndex < path.Length)
+            {
+                FollowPath(pursuitSpeed);
+            }
+            else if(TimeManager.Instance.CurrentTime < destinationReachedTime)
+            {
+                destinationReachedTime = TimeManager.Instance.CurrentTime;
+            }
+            else if(TimeManager.Instance.CurrentTime > destinationReachedTime + destinationWaitTime)
+            {
+                mode = defaultMode;
+            }
         }
 
         RotateToFaceMotion();
@@ -150,7 +159,8 @@ public class EnemyController : MonoBehaviour
     {
         Vector2 target = path[pathIndex];
         Vector2 maxMotion = target - (Vector2)transform.position;
-        Vector2 motion = maxMotion.normalized * Mathf.Min(pursuitSpeed * Time.deltaTime, maxMotion.magnitude);
+        Vector2 motion = maxMotion.normalized
+            * Mathf.Min(pursuitSpeed * Time.deltaTime * TimeManager.Instance.Flow, maxMotion.magnitude);
 
         characterController.Move(motion);
 

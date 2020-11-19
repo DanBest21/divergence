@@ -25,6 +25,21 @@ public class TransformRewind : MonoBehaviour
     private void LateUpdate ()
     {
         Log();
+
+        if(TimeManager.Instance.Flow < 0)
+        {
+            float time = TimeManager.Instance.CurrentTime;
+
+            while(log.GetLast().time >= time && log.Size > 1)
+            {
+                log.RemoveLast();
+            }
+
+            Vector2 target = log.GetLast().position;
+            float t = Time.deltaTime * Mathf.Abs(TimeManager.Instance.Flow) / (time - log.GetLast().time);
+
+            transform.position = Vector2.Lerp(transform.position, target, t);
+        }
     }
 
     private void Log ()

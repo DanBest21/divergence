@@ -28,7 +28,17 @@ public class TimeManager : MonoBehaviour
 
     private void Update ()
     {
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            Flow = -2;
+        }
+        else
+        {
+            Flow = 1;
+        }
         CurrentTime += Time.deltaTime * Flow;
+
+        CurrentTime = Mathf.Max(CurrentTime, 0.01f);
     }
 
     private void OnDestroy ()

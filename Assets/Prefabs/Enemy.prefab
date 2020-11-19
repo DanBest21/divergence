@@ -212,7 +212,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultMode: 3
-  stationaryAngle: 0
+  stationaryForward: {x: 0, y: 1}
+  stationaryTarget: {x: 0, y: 0}
   patrolRoute: []
   destinationWaitTime: 1.5
   patrolSpeed: 3
@@ -229,7 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9653837a14e1954fa971f7995765d06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 8
+  viewRadius: 6
   viewAngle: 60
   interestPoints:
     serializedVersion: 2
@@ -238,10 +239,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   visiblePoints: []
-  meshResolution: 1
+  meshResolution: 0.25
   viewMeshFilter: {fileID: 1171315984}
   edgeDetectionIterations: 6
-  edgeDetectionThreshold: 10
+  edgeDetectionThreshold: 6
 --- !u!1 &705852952799084375
 GameObject:
   m_ObjectHideFlags: 0

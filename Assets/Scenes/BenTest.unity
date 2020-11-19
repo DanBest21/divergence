@@ -921,6 +921,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1447131967}
     m_Modifications:
+    - target: {fileID: -5231898543639123658, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
+      propertyPath: viewRadius
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -5231898543639123658, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
+      propertyPath: meshResolution
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: -5231898543639123658, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
+      propertyPath: edgeDetectionThreshold
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 705852952566447617, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: m_Name
       value: Enemy
