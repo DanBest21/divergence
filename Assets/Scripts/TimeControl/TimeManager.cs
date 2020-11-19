@@ -30,15 +30,25 @@ public class TimeManager : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.LeftShift))
         {
-            Flow = -2;
+            if(CurrentTime > 1)
+            {
+                Flow = -2;
+                CurrentTime += Time.deltaTime * Flow;
+            }
+            else
+            {
+                Flow = 0;
+            }
+            
         }
         else
         {
             Flow = 1;
+            CurrentTime += Time.deltaTime * Flow;
         }
-        CurrentTime += Time.deltaTime * Flow;
+        
 
-        CurrentTime = Mathf.Max(CurrentTime, 0.01f);
+        
     }
 
     private void OnDestroy ()
