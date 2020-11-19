@@ -134,12 +134,20 @@ public class FieldOfView : MonoBehaviour
         int vertexCount = viewPoints.Count + 1;
         Vector3[] vertices = new Vector3[vertexCount];
         int[] triangles = new int[(vertexCount - 2) * 3];
+        Vector2[] uv = new Vector2[vertices.Length];
+
+        float maxX = 0f;
+        float maxY = 0f;
 
         vertices[0] = Vector2.zero;
+        uv[0] = Vector2.zero;
 
         for (int i = 0; i < vertexCount - 1; i++)
         {
             vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+
+            maxX = Mathf.Max(maxX, vertices[i + 1].x);
+            maxY = Mathf.Max(maxY, vertices[i + 1].y);
 
             if (i < vertexCount - 2)
             {
@@ -149,9 +157,15 @@ public class FieldOfView : MonoBehaviour
             }
         }
 
+        for (int i = 0; i < vertexCount - 1; i++)
+        {
+            uv[i + 1] = new Vector2(vertices[i + 1].x / maxX, vertices[i + 1].y / maxY);
+        }
+
         viewMesh.Clear();
         viewMesh.vertices = vertices;
         viewMesh.triangles = triangles;
+        viewMesh.uv = uv;
         viewMesh.RecalculateNormals();
     }
 

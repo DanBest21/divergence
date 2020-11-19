@@ -153,10 +153,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   visiblePoints: []
-  meshResolution: 0.25
+  meshResolution: 0.5
   viewMeshFilter: {fileID: 1019167918497569692}
-  edgeDetectionIterations: 6
-  edgeDetectionThreshold: 10
+  edgeDetectionIterations: 10
+  edgeDetectionThreshold: 20
 --- !u!1 &1945543330464126893
 GameObject:
   m_ObjectHideFlags: 0
