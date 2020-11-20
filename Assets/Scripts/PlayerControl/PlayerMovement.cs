@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float speed = 3;
 
+    public Camera MainCamera() { return mainCamera; }
+
     private void Awake ()
     {
         characterController = GetComponent<CharacterController2D>();
