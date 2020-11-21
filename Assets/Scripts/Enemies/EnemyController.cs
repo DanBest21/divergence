@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+
 [RequireComponent(typeof(CharacterController2D))]
 [RequireComponent(typeof(TransformRewind))]
 public class EnemyController : MonoBehaviour
@@ -29,7 +34,7 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField]
     private List<Vector2> patrolRoute = new List<Vector2>();
-    private int patrolIndex = 0;
+    private Rewindable<int> patrolIndex = new Rewindable<int>(32, 0);
 
     private int pathIndex = 1;
     private Vector2 pursuitTarget = Vector2.positiveInfinity;
@@ -113,13 +118,21 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        Vector2 target = patrolRoute[patrolIndex];
+        int pi = patrolIndex.Get();
+
+        Vector2 target = patrolRoute[pi];
+
+
         if(TimeManager.Instance.Flow > 0)
         {
-            if(Vector2.Distance(transform.position, target) < 0.01f || path == null)
+            if(((Vector2)transform.position - target).sqrMagnitude < 0.01f)
             {
-                patrolIndex = (patrolIndex + 1) % patrolRoute.Count;
-                target = patrolRoute[patrolIndex];
+                patrolIndex.Set((pi + 1) % patrolRoute.Count);
+                path = null;
+            }
+            if(path == null)
+            { 
+                target = patrolRoute[patrolIndex.Get()];
                 UpdatePath(target);
             }
 
@@ -207,5 +220,13 @@ public class EnemyController : MonoBehaviour
                 Gizmos.DrawLine(path[i - 1], path[i]);
             }
         }
+
+#if UNITY_EDITOR
+        if(mode == Mode.Patrolling)
+        {
+            Handles.color = Color.white;
+            Handles.Label(transform.position + Vector3.up, patrolIndex.Get().ToString());
+        }
+#endif
     }
 }

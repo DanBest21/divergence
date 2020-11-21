@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TimeManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class TimeManager : MonoBehaviour
 
     public float Flow { get; set; } = 1;
 
+    private UnityEvent onLateUpdateEvent = new UnityEvent();
+
     private void Awake ()
     {
         if(Instance == null)
@@ -24,6 +27,16 @@ public class TimeManager : MonoBehaviour
         {
             Debug.LogError("Multiple Time Managers Detected! Only one should exist per scene.");
         }
+    }
+
+    public void AddLateUpdateListener (UnityAction action)
+    {
+        onLateUpdateEvent.AddListener(action);
+    }
+
+    private void LateUpdate ()
+    {
+        onLateUpdateEvent.Invoke();
     }
 
     private void Update ()
@@ -46,9 +59,6 @@ public class TimeManager : MonoBehaviour
             Flow = 1;
             CurrentTime += Time.deltaTime * Flow;
         }
-        
-
-        
     }
 
     private void OnDestroy ()
