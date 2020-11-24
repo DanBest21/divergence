@@ -32,7 +32,7 @@ public class FireProjectile : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0) && canFire)
+        if (Input.GetKey(KeyCode.Mouse0) && canFire && TimeManager.Instance.Flow > 0)
         {
             canFire = false;
 
@@ -47,7 +47,7 @@ public class FireProjectile : MonoBehaviour
             Vector2 direction = ((Vector2)(mousePos - transform.position)).normalized;
 
             moveProjectile = firedProjectile.GetComponent<MoveProjectile>();
-            moveProjectile.Setup(direction, meshFilter.mesh);
+            moveProjectile.Setup(direction, meshFilter.mesh, this);
         }
 
         if (!canFire && moveProjectile.HasStopped())

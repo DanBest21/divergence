@@ -7,6 +7,8 @@ public class MoveProjectile : MonoBehaviour
     private Vector3 startPoint;
     private Vector3 destinationPoint;
     private Vector2 direction;
+    private FireProjectile fireProjectile;
+    private float timeLanded = float.MaxValue;
     private bool hasStopped = true;
 
     private Mesh mesh;
@@ -25,18 +27,25 @@ public class MoveProjectile : MonoBehaviour
 
     public float Speed() { return speed; }
 
-    public void Setup(Vector2 direction, Mesh mesh)
+    public void Setup(Vector2 direction, Mesh mesh, FireProjectile fireProjectile)
     {
         startPoint = transform.position;
         this.direction = direction;
         this.mesh = mesh;
+        this.fireProjectile = fireProjectile;
 
         hasStopped = false;
     }
 
     void LateUpdate()
     {
-        if (!hasStopped)
+        bool timeRewinding = TimeManager.Instance.Flow < 0;
+
+        if (timeRewinding && fireProjectile != null && !fireProjectile.CanFire() && TimeManager.Instance.CurrentTime <= timeLanded)
+        {
+            RewindProjectile();
+        }
+        else if (!hasStopped)
         {
             DrawProjectile();
         }
@@ -52,6 +61,7 @@ public class MoveProjectile : MonoBehaviour
         {
             transform.position = objectHit.point - (direction * mesh.bounds.size.y * 0.8f);
 
+            timeLanded = TimeManager.Instance.CurrentTime;
             hasStopped = true;
         }
         else
@@ -60,5 +70,11 @@ public class MoveProjectile : MonoBehaviour
         }
 
         destinationPoint = transform.position;
+    }
+
+    void RewindProjectile()
+    {
+        Vector2 playerDirection = (fireProjectile.gameObject.transform.position - transform.position).normalized;
+        transform.position += (Vector3)playerDirection * speed * Time.deltaTime;
     }
 }
