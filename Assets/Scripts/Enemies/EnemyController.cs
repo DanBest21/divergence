@@ -25,7 +25,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private Mode defaultMode = Mode.Stationary;
 
-    private Mode mode;
+    private Rewindable<Mode> mode;
 
     [SerializeField]
     private Vector2 stationaryForward = Vector2.up;
@@ -34,7 +34,7 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField]
     private List<Vector2> patrolRoute = new List<Vector2>();
-    private Rewindable<int> patrolIndex = new Rewindable<int>(32, 0);
+    private Rewindable<int> patrolIndex = new Rewindable<int>(0, 30);
 
     private int pathIndex = 1;
     private Vector2 pursuitTarget = Vector2.positiveInfinity;
@@ -56,7 +56,7 @@ public class EnemyController : MonoBehaviour
     {
         characterController = GetComponent<CharacterController2D>();
         transformRewind = GetComponent<TransformRewind>();
-        mode = defaultMode;
+        mode = new Rewindable<Mode>(defaultMode);
     }
 
     private void Update ()
@@ -68,7 +68,7 @@ public class EnemyController : MonoBehaviour
             path = null;
         }
 
-        switch(mode)
+        switch(mode.Get())
         {
             case Mode.Dead:
                 break;
@@ -161,7 +161,7 @@ public class EnemyController : MonoBehaviour
             }
             else if(TimeManager.Instance.CurrentTime > destinationReachedTime + destinationWaitTime)
             {
-                mode = defaultMode;
+                mode.Set(defaultMode);
             }
         }
 
@@ -203,6 +203,11 @@ public class EnemyController : MonoBehaviour
         transform.up = transformRewind.GetSmoothedForward(transform.position, 0.1f);
     }
 
+    public void Kill ()
+    {
+        mode.Set(Mode.Dead);
+    }
+
 
     private void OnDrawGizmosSelected ()
     {
@@ -222,7 +227,7 @@ public class EnemyController : MonoBehaviour
         }
 
 #if UNITY_EDITOR
-        if(mode == Mode.Patrolling)
+        if(mode != null && mode.Get() == Mode.Patrolling)
         {
             Handles.color = Color.white;
             Handles.Label(transform.position + Vector3.up, patrolIndex.Get().ToString());

@@ -26,7 +26,7 @@ class Rewindable<T>
     /// </summary>
     /// <param name="capacity"></param>
     /// <param name="value"></param>
-    public Rewindable (int capacity, T value)
+    public Rewindable (T value, int capacity = 32)
     {
         log = new CircleStack<State>(capacity);
         log.Add(new State(0, value));
