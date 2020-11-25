@@ -17,6 +17,9 @@ public class TimeManager : MonoBehaviour
 
     private UnityEvent onLateUpdateEvent = new UnityEvent();
 
+    [SerializeField]
+    private FireProjectile fireProjectile = null;
+
     private void Awake ()
     {
         if(Instance == null)
@@ -41,24 +44,19 @@ public class TimeManager : MonoBehaviour
 
     private void Update ()
     {
-        if(Input.GetKey(KeyCode.LeftShift))
+        if(!fireProjectile.CanFire())
         {
-            if(CurrentTime > 1)
+            if(Input.GetKeyDown(KeyCode.LeftShift))
             {
                 Flow = -2;
-                CurrentTime += Time.deltaTime * Flow;
             }
-            else
-            {
-                Flow = 0;
-            }
-            
         }
         else
         {
             Flow = 1;
-            CurrentTime += Time.deltaTime * Flow;
         }
+
+        CurrentTime += Time.deltaTime * Flow;
     }
 
     private void OnDestroy ()

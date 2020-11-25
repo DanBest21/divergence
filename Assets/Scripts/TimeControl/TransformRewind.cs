@@ -10,6 +10,8 @@ public class TransformRewind : MonoBehaviour
     [SerializeField]
     private float maxErrorVelocity = 0.01f;
 
+    [SerializeField]
+
     private struct State
     {
         public float time;
