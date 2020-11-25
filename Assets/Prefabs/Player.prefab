@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
-  speed: 5
+  speed: 10
 --- !u!114 &1945543330252939992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,10 +308,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   visiblePoints: []
-  meshResolution: 2
+  meshResolution: 5
   viewMeshFilter: {fileID: 1019167918497569692}
   edgeDetectionIterations: 10
-  edgeDetectionThreshold: 22
+  edgeDetectionThreshold: 30
 --- !u!114 &1913275775235613188
 MonoBehaviour:
   m_ObjectHideFlags: 0
