@@ -48,6 +48,11 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private float pursuitSpeed = 5;
 
+    [SerializeField]
+    private Material aliveMaterial;
+    [SerializeField]
+    private Material deadMaterial;
+
     private float stationaryTolerance = 1;
 
 
@@ -68,9 +73,10 @@ public class EnemyController : MonoBehaviour
             path = null;
         }
 
-        switch(mode.Get())
+        switch (mode.Get())
         {
             case Mode.Dead:
+                transform.GetComponent<MeshRenderer>().material = deadMaterial;
                 break;
             case Mode.Stationary:
                 StationaryUpdate();
@@ -88,7 +94,9 @@ public class EnemyController : MonoBehaviour
 
     void StationaryUpdate ()
     {
-        if(Vector2.Distance(transform.position, stationaryTarget) > stationaryTolerance 
+        transform.GetComponent<MeshRenderer>().material = aliveMaterial;
+
+        if (Vector2.Distance(transform.position, stationaryTarget) > stationaryTolerance 
             && TimeManager.Instance.Flow > 0)
         {
             if(path == null)
@@ -112,7 +120,9 @@ public class EnemyController : MonoBehaviour
 
     void PatrolUpdate ()
     {
-        if(patrolRoute == null || patrolRoute.Count < 2)
+        transform.GetComponent<MeshRenderer>().material = aliveMaterial;
+
+        if (patrolRoute == null || patrolRoute.Count < 2)
         {
             Debug.LogError("Invalid patrol route found. Please assign at least 2 points to enemy with patrol job");
             return;
@@ -144,7 +154,9 @@ public class EnemyController : MonoBehaviour
 
     void PursuitUpdate ()
     {
-        if(TimeManager.Instance.Flow > 0)
+        transform.GetComponent<MeshRenderer>().material = aliveMaterial;
+
+        if (TimeManager.Instance.Flow > 0)
         {
             if((path == null || path[path.Length - 1] != pursuitTarget) && pursuitTarget != Vector2.positiveInfinity)
             {
@@ -208,6 +220,10 @@ public class EnemyController : MonoBehaviour
         mode.Set(Mode.Dead);
     }
 
+    public bool isDead()
+    {
+        return mode.Get() == Mode.Dead;
+    }
 
     private void OnDrawGizmosSelected ()
     {

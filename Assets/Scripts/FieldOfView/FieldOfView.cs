@@ -62,7 +62,17 @@ public class FieldOfView : MonoBehaviour
 
     void LateUpdate()
     {
-        DrawFOV();
+        EnemyController enemyController;
+        bool isEnemy = transform.TryGetComponent<EnemyController>(out enemyController);
+
+        if (isEnemy && enemyController.isDead())
+        {
+            viewMesh.Clear();
+        }
+        else
+        {
+            DrawFOV();
+        }
     }
 
     IEnumerator FindPointsCoroutine(float delay)

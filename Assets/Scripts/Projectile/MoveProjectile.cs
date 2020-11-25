@@ -8,7 +8,9 @@ public class MoveProjectile : MonoBehaviour
     private Vector3 destinationPoint;
     private Vector2 direction;
     private FireProjectile fireProjectile;
+    private float timeStarted = float.MaxValue;
     private float timeLanded = float.MaxValue;
+    private float timeRewind = 0;
     private bool hasStopped = true;
 
     private Mesh mesh;
@@ -34,6 +36,7 @@ public class MoveProjectile : MonoBehaviour
         this.mesh = mesh;
         this.fireProjectile = fireProjectile;
 
+        timeStarted = TimeManager.Instance.CurrentTime;
         hasStopped = false;
     }
 
@@ -41,8 +44,9 @@ public class MoveProjectile : MonoBehaviour
     {
         bool timeRewinding = TimeManager.Instance.Flow < 0;
 
-        if (timeRewinding && fireProjectile != null && !fireProjectile.CanFire() && TimeManager.Instance.CurrentTime <= timeLanded)
+        if (timeRewinding) // && TimeManager.Instance.CurrentTime <= timeLanded)
         {
+            timeRewind = Mathf.Max(timeRewind, TimeManager.Instance.CurrentTime);
             RewindProjectile();
         }
         else if (!hasStopped)
@@ -58,7 +62,12 @@ public class MoveProjectile : MonoBehaviour
         RaycastHit2D objectHit = Physics2D.Raycast(transform.position, direction, speed * Time.deltaTime, layerMask);
 
         if (objectHit)
-        {
+        {            
+            if ((LayerMask.GetMask("Enemies") & 1 << objectHit.transform.gameObject.layer) != 0)
+            {
+                objectHit.transform.gameObject.GetComponent<EnemyController>().Kill();
+            }
+            
             transform.position = objectHit.point - (direction * mesh.bounds.size.y * 0.8f);
 
             timeLanded = TimeManager.Instance.CurrentTime;
@@ -74,7 +83,19 @@ public class MoveProjectile : MonoBehaviour
 
     void RewindProjectile()
     {
-        Vector2 playerDirection = (fireProjectile.gameObject.transform.position - transform.position).normalized;
-        transform.position += (Vector3)playerDirection * speed * Time.deltaTime;
+        // Vector3 rewindPosition = transform.position + (Vector3)direction * speed * TimeManager.Instance.Flow * Time.deltaTime;
+        float rewindSpeed = Vector3.Distance(destinationPoint, startPoint) / (timeRewind - timeStarted);
+        Vector3 rewindPosition = transform.position + (Vector3)direction * rewindSpeed * TimeManager.Instance.Flow * Time.deltaTime;
+        float rewindDistance = Vector3.Distance(transform.position, rewindPosition);
+        float distanceToTarget = Vector3.Distance(transform.position, startPoint);
+
+        if (distanceToTarget < rewindDistance)
+        {
+            fireProjectile.Pickup();
+        }
+        else
+        {
+            transform.position = rewindPosition;
+        }
     }
 }

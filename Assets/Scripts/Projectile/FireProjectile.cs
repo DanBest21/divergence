@@ -54,10 +54,15 @@ public class FireProjectile : MonoBehaviour
         {
             if (Physics2D.Raycast(transform.position, (moveProjectile.transform.position - transform.position).normalized, pickupRange, pickup))
             {
-                Destroy(firedProjectile);
-                projectile.SetActive(true);
-                canFire = true;
+                Pickup();
             }
         }
+    }
+
+    public void Pickup()
+    {
+        Destroy(firedProjectile);
+        projectile.SetActive(true);
+        canFire = true;
     }
 }
