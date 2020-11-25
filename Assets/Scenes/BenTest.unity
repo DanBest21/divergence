@@ -493,11 +493,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 705852952566447679, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
   m_PrefabInstance: {fileID: 603372950}
   m_PrefabAsset: {fileID: 0}
---- !u!33 &634599706 stripped
-MeshFilter:
-  m_CorrespondingSourceObject: {fileID: 6811056414483779015, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
-  m_PrefabInstance: {fileID: 1945543329122132082}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &749163865
 GameObject:
   m_ObjectHideFlags: 0
@@ -1239,6 +1234,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 633727493523573655, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
+      propertyPath: m_Name
+      value: VisualKnife
+      objectReference: {fileID: 0}
     - target: {fileID: 1945543330252939994, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1290,18 +1289,6 @@ PrefabInstance:
     - target: {fileID: 1945543330252939996, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3628930724689255544, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
-      propertyPath: meshResolution
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3628930724689255544, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
-      propertyPath: viewMeshFilter
-      value: 
-      objectReference: {fileID: 634599706}
-    - target: {fileID: 4290546466567175621, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
-      propertyPath: meshResolution
-      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
