@@ -71,7 +71,6 @@ public class EnemyController : MonoBehaviour
     private Rewindable<bool> canSeePlayer = new Rewindable<bool>(false);
 
 
-
     private void Awake ()
     {
         characterController = GetComponent<CharacterController2D>();
@@ -92,7 +91,6 @@ public class EnemyController : MonoBehaviour
         {
             path = null;
         }
-
         switch(mode.Get())
         {
             case Mode.Dead:
@@ -109,7 +107,6 @@ public class EnemyController : MonoBehaviour
             default:
                 break;
         }
-
         if(mode.Get() == Mode.Dead)
         {
             meshRenderer.material = deadMaterial;
@@ -122,7 +119,6 @@ public class EnemyController : MonoBehaviour
             }
             meshRenderer.material = aliveMaterial;
         }
-
         UpdateFovColor();
         if(canSeePlayer.Get())
         {
@@ -305,7 +301,7 @@ public class EnemyController : MonoBehaviour
 
     private void FollowPath (float speed)
     {
-        if(pathIndex >= path.Length)
+        if(path == null || pathIndex >= path.Length)
         {
             path = null;
             return;
@@ -362,6 +358,7 @@ public class EnemyController : MonoBehaviour
         }
 
         Gizmos.color = Color.red;
+
         if(path != null && path.Length > 2)
         {
             for(int i = 1; i < path.Length; i++)
@@ -369,6 +366,9 @@ public class EnemyController : MonoBehaviour
                 Gizmos.DrawLine(path[i - 1], path[i]);
             }
         }
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(stationaryTarget, 0.5f);
 
 #if UNITY_EDITOR
         if(mode != null && mode.Get() == Mode.Patrolling)

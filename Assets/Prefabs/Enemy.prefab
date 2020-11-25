@@ -183,6 +183,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxErrorDistance: 0.01
   maxErrorVelocity: 0.01
+  ghostMode: 0
+  ghost: {fileID: 0}
 --- !u!114 &705852952566447619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,7 +221,7 @@ MonoBehaviour:
   - {x: -8, y: 8}
   - {x: -12, y: -9}
   - {x: -3, y: 0}
-  destinationWaitTime: 1.5
+  destinationWaitTime: 3
   patrolSpeed: 3
   pursuitSpeed: 3
   aliveMaterial: {fileID: 2100000, guid: 8ffd6a2ad662b7e4ebbd51a5356bae18, type: 2}
