@@ -41,7 +41,7 @@ public class EnemyController : MonoBehaviour
     private Rewindable<int> patrolIndex = new Rewindable<int>(0, 30);
 
     private int pathIndex = 1;
-    private Vector2 pursuitTarget = Vector2.positiveInfinity;
+    private Rewindable<Vector2> pursuitTarget = new Rewindable<Vector2> (Vector2.positiveInfinity);
     private Vector2[] path;
     private Rewindable<float> destinationReachedTime = new Rewindable<float>(Mathf.Infinity);
     [SerializeField]
@@ -68,6 +68,8 @@ public class EnemyController : MonoBehaviour
 
     private float stationaryTolerance = 1;
 
+    private Rewindable<bool> canSeePlayer = new Rewindable<bool>(false);
+
 
 
     private void Awake ()
@@ -91,17 +93,7 @@ public class EnemyController : MonoBehaviour
             path = null;
         }
 
-        if(mode.Get() == Mode.Dead)
-        {
-            meshRenderer.material = deadMaterial;
-        }
-        else
-        {
-            CheckForPlayer();
-            meshRenderer.material = aliveMaterial;
-        }
-
-        switch (mode.Get())
+        switch(mode.Get())
         {
             case Mode.Dead:
                 break;
@@ -117,6 +109,25 @@ public class EnemyController : MonoBehaviour
             default:
                 break;
         }
+
+        if(mode.Get() == Mode.Dead)
+        {
+            meshRenderer.material = deadMaterial;
+        }
+        else
+        {
+            if(TimeManager.Instance.Flow > 0)
+            {
+                CheckForPlayer();
+            }
+            meshRenderer.material = aliveMaterial;
+        }
+
+        UpdateFovColor();
+        if(canSeePlayer.Get())
+        {
+            transform.up = pursuitTarget.Get() - (Vector2)transform.position;
+        }
     }
 
     void CheckForPlayer ()
@@ -125,15 +136,31 @@ public class EnemyController : MonoBehaviour
 
         if(interests.Count > 0)
         {
-            fovMeshRenderer.material = inSightFovMaterial;
-            pursuitTarget = interests[0].position;
+            if(Vector2.Distance(pursuitTarget.Get(), interests[0].position) > 0.25f)
+            {
+                pursuitTarget.Set(interests[0].position);
+            }
+            canSeePlayer.Set(true);
             mode.Set(Mode.Pursuing);
+            
+        }
+        else
+        {
+            canSeePlayer.Set(false);            
+        }
+        
+    }
+
+    void UpdateFovColor ()
+    {
+        if(canSeePlayer.Get())
+        {
+            fovMeshRenderer.material = inSightFovMaterial;
         }
         else
         {
             fovMeshRenderer.material = mode.Get() == Mode.Pursuing ? pursuingFovMaterial : normalFovMaterial;
-        }
-        
+        }        
     }
 
     void StationaryUpdate ()
@@ -198,9 +225,10 @@ public class EnemyController : MonoBehaviour
     {        
         if (TimeManager.Instance.Flow > 0)
         {
-            if((path == null || path[path.Length - 1] != pursuitTarget) && pursuitTarget != Vector2.positiveInfinity)
+            Vector2 target = pursuitTarget.Get();
+            if((path == null || path[path.Length - 1] != target) && target != Vector2.positiveInfinity)
             {
-                UpdatePath(pursuitTarget);
+                UpdatePath(target);
             }
 
             if(pathIndex < path.Length)
