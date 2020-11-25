@@ -68,7 +68,7 @@ public class MoveProjectile : MonoBehaviour
                 objectHit.transform.gameObject.GetComponent<EnemyController>().Kill();
             }
             
-            transform.position = objectHit.point - (direction * mesh.bounds.size.y * 0.8f);
+            transform.position = objectHit.point + objectHit.normal / 10;
 
             timeLanded = TimeManager.Instance.CurrentTime;
             hasStopped = true;
@@ -83,19 +83,20 @@ public class MoveProjectile : MonoBehaviour
 
     void RewindProjectile()
     {
-        // Vector3 rewindPosition = transform.position + (Vector3)direction * speed * TimeManager.Instance.Flow * Time.deltaTime;
-        float rewindSpeed = Vector3.Distance(destinationPoint, startPoint) / (timeRewind - timeStarted);
-        Vector3 rewindPosition = transform.position + (Vector3)direction * rewindSpeed * TimeManager.Instance.Flow * Time.deltaTime;
-        float rewindDistance = Vector3.Distance(transform.position, rewindPosition);
-        float distanceToTarget = Vector3.Distance(transform.position, startPoint);
+        float timeSinceThrow = TimeManager.Instance.CurrentTime - timeStarted;
 
-        if (distanceToTarget < rewindDistance)
+        if(timeSinceThrow < 0)
         {
             fireProjectile.Pickup();
+            return;
         }
-        else
-        {
-            transform.position = rewindPosition;
-        }
+
+        float maxPossibleDistance = speed * timeSinceThrow;
+        float currentDistance = Vector2.Distance(startPoint, transform.position);
+        float newDistance = Mathf.Min(currentDistance, maxPossibleDistance);
+
+        Vector3 position = startPoint + (Vector3)direction.normalized * newDistance;
+
+        transform.position = position;
     }
 }

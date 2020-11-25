@@ -10,6 +10,9 @@ public class FireProjectile : MonoBehaviour
     private MoveProjectile moveProjectile;
 
     [SerializeField]
+    private GameObject visualProjectile;
+
+    [SerializeField]
     private bool canFire = true;
 
     [SerializeField]
@@ -42,7 +45,7 @@ public class FireProjectile : MonoBehaviour
 
             firedProjectile = Instantiate(projectile, transform.position, Quaternion.Euler(0, 0, angle));
 
-            projectile.SetActive(false);
+            visualProjectile.SetActive(false);
 
             Vector2 direction = ((Vector2)(mousePos - transform.position)).normalized;
 
@@ -62,7 +65,7 @@ public class FireProjectile : MonoBehaviour
     public void Pickup()
     {
         Destroy(firedProjectile);
-        projectile.SetActive(true);
+        visualProjectile.SetActive(true);
         canFire = true;
     }
 }

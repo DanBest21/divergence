@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
 {
     private CharacterController2D characterController;
 
+    public bool IsAlive { get; private set; } = true;
+
     [SerializeField]
     private Camera mainCamera = null;
 
@@ -24,6 +26,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if(!IsAlive)
+        {
+            return;
+        }
         input = new Vector2(
             Input.GetAxisRaw("Horizontal"), 
             Input.GetAxisRaw("Vertical")
@@ -48,5 +54,10 @@ public class PlayerMovement : MonoBehaviour
         float angle = Vector2.SignedAngle(Vector2.up, mousePos - transform.position);
 
         transform.rotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    public void Kill ()
+    {
+        IsAlive = false;
     }
 }
