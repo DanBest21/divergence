@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using UnityEngine;
 
 public class CircleStack<T>
 {
@@ -89,9 +89,12 @@ public class CircleStack<T>
     {
         T[] newBuffer = new T[buffer.Length * 2];
 
+        Debug.Log("Resizing from: " + buffer.Length + " to " + newBuffer.Length);
+
         for(int i = 0; i < size; i++)
         {
-            newBuffer[newBuffer.Length - size] = GetRecent(i);
+            int index = newBuffer.Length - size - i;
+            newBuffer[index] = GetRecent(i);
         }
 
         buffer = newBuffer;

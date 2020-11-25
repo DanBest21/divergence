@@ -46,9 +46,9 @@ class Rewindable<T>
 
     public void Set (T value)
     {
-        if(log.GetLast().Equals(value))
+        if(log.GetLast().value.Equals(value))
         {
-            log.RemoveLast();
+            return;
         }
 
         log.Add(new State(TimeManager.Instance.CurrentTime, value));
@@ -59,6 +59,7 @@ class Rewindable<T>
             if(TimeManager.Instance.CurrentTime - overwrite.time < TimeManager.Instance.MaxLogTime)
             {
                 log.Resize();
+                Debug.Log("Resized");
             }
         }
     }

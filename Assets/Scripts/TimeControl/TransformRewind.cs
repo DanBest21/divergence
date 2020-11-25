@@ -57,6 +57,7 @@ public class TransformRewind : MonoBehaviour
             if(newState.time - overwrite.time < TimeManager.Instance.MaxLogTime)
             {
                 log.Resize();
+                Debug.Log("Resized");
             }
         }
 
@@ -82,6 +83,19 @@ public class TransformRewind : MonoBehaviour
     public Vector2 GetLastLogPoint ()
     {
         return log.GetLast().position;
+    }
+
+    public Vector2 GetLastMotion ()
+    {
+        Vector2 currentPos = log.GetLast().position;
+        Vector2 prev = log.GetRecent(1).position;
+        int i = 2;
+        while((currentPos - prev).sqrMagnitude < 0.01f && i < log.Size - 1)
+        {
+            prev = log.GetRecent(i).position;
+            i++;
+        }
+        return (currentPos - prev).normalized;
     }
 
     public Vector2 GetSmoothedForward (Vector2 newPosition, float smoothTime)

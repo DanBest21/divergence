@@ -9,10 +9,14 @@ using UnityEditor;
 
 [RequireComponent(typeof(CharacterController2D))]
 [RequireComponent(typeof(TransformRewind))]
+[RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(FieldOfView))]
 public class EnemyController : MonoBehaviour
 {
     private CharacterController2D characterController;
     private TransformRewind transformRewind;
+    private MeshRenderer meshRenderer;
+    private FieldOfView fov;
 
     private enum Mode
     {
@@ -39,7 +43,7 @@ public class EnemyController : MonoBehaviour
     private int pathIndex = 1;
     private Vector2 pursuitTarget = Vector2.positiveInfinity;
     private Vector2[] path;
-    private float destinationReachedTime = Mathf.Infinity;
+    private Rewindable<float> destinationReachedTime = new Rewindable<float>(Mathf.Infinity);
     [SerializeField]
     private float destinationWaitTime = 1.5f;
 
@@ -53,6 +57,15 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private Material deadMaterial;
 
+    [SerializeField]
+    private MeshRenderer fovMeshRenderer;
+    [SerializeField]
+    private Material normalFovMaterial;
+    [SerializeField]
+    private Material pursuingFovMaterial;
+    [SerializeField]
+    private Material inSightFovMaterial;
+
     private float stationaryTolerance = 1;
 
 
@@ -61,22 +74,36 @@ public class EnemyController : MonoBehaviour
     {
         characterController = GetComponent<CharacterController2D>();
         transformRewind = GetComponent<TransformRewind>();
+        meshRenderer = GetComponent<MeshRenderer>();
+        fov = GetComponent<FieldOfView>();
         mode = new Rewindable<Mode>(defaultMode);
+
+        if(defaultMode == Mode.Pursuing)
+        {
+            Debug.LogError("Enemy set to pursue by default - has nothing to pursue");
+        }
     }
 
     private void Update ()
     {
-        //DEBUG ONLY REALLY BAD CODE
-        pursuitTarget = FindObjectOfType<PlayerMovement>().transform.position;
         if(TimeManager.Instance.Flow < 0)
         {
             path = null;
         }
 
+        if(mode.Get() == Mode.Dead)
+        {
+            meshRenderer.material = deadMaterial;
+        }
+        else
+        {
+            CheckForPlayer();
+            meshRenderer.material = aliveMaterial;
+        }
+
         switch (mode.Get())
         {
             case Mode.Dead:
-                transform.GetComponent<MeshRenderer>().material = deadMaterial;
                 break;
             case Mode.Stationary:
                 StationaryUpdate();
@@ -92,9 +119,25 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    void CheckForPlayer ()
+    {
+        List<Transform> interests = fov.VisiblePoints();
+
+        if(interests.Count > 0)
+        {
+            fovMeshRenderer.material = inSightFovMaterial;
+            pursuitTarget = interests[0].position;
+            mode.Set(Mode.Pursuing);
+        }
+        else
+        {
+            fovMeshRenderer.material = mode.Get() == Mode.Pursuing ? pursuingFovMaterial : normalFovMaterial;
+        }
+        
+    }
+
     void StationaryUpdate ()
     {
-        transform.GetComponent<MeshRenderer>().material = aliveMaterial;
 
         if (Vector2.Distance(transform.position, stationaryTarget) > stationaryTolerance 
             && TimeManager.Instance.Flow > 0)
@@ -108,8 +151,9 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            Vector2 up = transformRewind.GetSmoothedForward((Vector2)transform.position + stationaryForward, 0.3f); ;
-            if(up == Vector2.zero)
+            Vector2 up = transformRewind.GetSmoothedForward((Vector2)transform.position + stationaryForward, 0.3f);
+        
+            if(up == Vector2.zero || TimeManager.Instance.Flow < 0)
             {
                 up = stationaryForward;
             }
@@ -120,8 +164,6 @@ public class EnemyController : MonoBehaviour
 
     void PatrolUpdate ()
     {
-        transform.GetComponent<MeshRenderer>().material = aliveMaterial;
-
         if (patrolRoute == null || patrolRoute.Count < 2)
         {
             Debug.LogError("Invalid patrol route found. Please assign at least 2 points to enemy with patrol job");
@@ -153,9 +195,7 @@ public class EnemyController : MonoBehaviour
     }
 
     void PursuitUpdate ()
-    {
-        transform.GetComponent<MeshRenderer>().material = aliveMaterial;
-
+    {        
         if (TimeManager.Instance.Flow > 0)
         {
             if((path == null || path[path.Length - 1] != pursuitTarget) && pursuitTarget != Vector2.positiveInfinity)
@@ -167,21 +207,66 @@ public class EnemyController : MonoBehaviour
             {
                 FollowPath(pursuitSpeed);
             }
-            else if(TimeManager.Instance.CurrentTime < destinationReachedTime)
+            else if(TimeManager.Instance.CurrentTime < destinationReachedTime.Get())
             {
-                destinationReachedTime = TimeManager.Instance.CurrentTime;
+                destinationReachedTime.Set(TimeManager.Instance.CurrentTime);
             }
-            else if(TimeManager.Instance.CurrentTime > destinationReachedTime + destinationWaitTime)
+            else if(TimeManager.Instance.CurrentTime > destinationReachedTime.Get() + destinationWaitTime)
             {
                 mode.Set(defaultMode);
+                return;
             }
         }
+        if(TimeManager.Instance.CurrentTime < destinationReachedTime.Get() + destinationWaitTime)
+        {
+            LookAroundAtDestination();
+        }
+        else
+        {
+            RotateToFaceMotion();
+        }
+            
+    }
+    private void LookAroundAtDestination ()
+    {        
+        Vector2 forward = transformRewind.GetLastMotion();
+        Vector2 left = Vector2.Perpendicular(forward);
+        Vector2 lookDir;
+        float t = (TimeManager.Instance.CurrentTime - destinationReachedTime.Get()) / destinationWaitTime;
 
-        RotateToFaceMotion();
+        if(t > 0.5f)
+        {
+            t -= 0.5f;
+            t *= 2;
+        }
+
+        if(t < 0.25f)
+        {
+            lookDir = Vector2.Lerp(forward, left, t * 4);
+        }
+        else if(t < 0.5f)
+        {
+            lookDir = Vector2.Lerp(left, forward, (t-0.25f) * 4);
+        }
+        else if(t < 0.75f)
+        {
+            lookDir = Vector2.Lerp(forward, -left, (t - 0.5f) * 4);
+        }
+        else
+        {
+            lookDir = Vector2.Lerp(-left, forward, (t - 0.75f) * 4);
+        }
+
+        transform.up = lookDir;            
     }
 
     private void FollowPath (float speed)
     {
+        if(pathIndex >= path.Length)
+        {
+            path = null;
+            return;
+        }
         Vector2 target = path[pathIndex];
         Vector2 maxMotion = target - (Vector2)transform.position;
         Vector2 motion = maxMotion.normalized
@@ -205,7 +290,7 @@ public class EnemyController : MonoBehaviour
     {
         path = NavGrid.Instance.GetPath(transform.position, target);
         pathIndex = 1;
-        destinationReachedTime = Mathf.Infinity;
+        destinationReachedTime.Set(Mathf.Infinity);
     }
 
 

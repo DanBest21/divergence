@@ -212,15 +212,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9f8cc290e30daf4d80908816615fdd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultMode: 3
+  defaultMode: 2
   stationaryForward: {x: 0, y: 1}
   stationaryTarget: {x: 0, y: 0}
-  patrolRoute: []
+  patrolRoute:
+  - {x: -8, y: 8}
+  - {x: -12, y: -9}
+  - {x: -3, y: 0}
   destinationWaitTime: 1.5
   patrolSpeed: 3
   pursuitSpeed: 3
   aliveMaterial: {fileID: 2100000, guid: 8ffd6a2ad662b7e4ebbd51a5356bae18, type: 2}
-  deadMaterial: {fileID: 2100000, guid: 986612a06c7ab114990002f615f41d13, type: 2}
+  deadMaterial: {fileID: 2100000, guid: bef7e84e8260f994c9ca1d087624ed8f, type: 2}
+  fovMeshRenderer: {fileID: 1171315983}
+  normalFovMaterial: {fileID: 2100000, guid: 7116797e02b9f194dad20c38a41d1efb, type: 2}
+  pursuingFovMaterial: {fileID: 2100000, guid: 754a612996bfb3346840aeb15f1730b9, type: 2}
+  inSightFovMaterial: {fileID: 2100000, guid: b3d981dc711087246bd8b1de8675be4e, type: 2}
 --- !u!114 &-5231898543639123658
 MonoBehaviour:
   m_ObjectHideFlags: 0
