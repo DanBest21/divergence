@@ -11,6 +11,9 @@ public class TransformRewind : MonoBehaviour
     private float maxErrorVelocity = 0.01f;
 
     [SerializeField]
+    private bool ghostMode = false;
+    [SerializeField]
+    private Transform ghost = null;
 
     private struct State
     {
@@ -40,7 +43,19 @@ public class TransformRewind : MonoBehaviour
             Vector2 target = log.GetLast().position;
             float t = Time.deltaTime * Mathf.Abs(TimeManager.Instance.Flow) / (time - log.GetLast().time);
 
-            transform.position = Vector2.Lerp(transform.position, target, t);
+            if(!ghostMode)
+            {
+                transform.position = Vector2.Lerp(transform.position, target, t);
+            }
+            else
+            {
+                ghost.position = Vector2.Lerp(ghost.position, target, t);
+            }
+            
+        }
+        else if(ghost != null)
+        {
+            ghost.position = transform.position;
         }
     }
 
