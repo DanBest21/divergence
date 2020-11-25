@@ -32,7 +32,7 @@ class Rewindable<T>
         log.Add(new State(0, value));
     }
 
-    public T Get ()
+    private void CleanLog ()
     {
         float time = TimeManager.Instance.CurrentTime;
 
@@ -40,9 +40,47 @@ class Rewindable<T>
         {
             log.RemoveLast();
         }
+    }
 
+    public T Get ()
+    {
+        CleanLog();
         return log.GetLast().value;
     }
+
+    public float GetTime ()
+    {
+        CleanLog();
+        return log.GetLast().time;
+    }
+
+    public float GetPrevTime ()
+    {
+        CleanLog();
+        if(log.Size > 2)
+        {
+            return log.GetRecent(1).time;
+        }
+        else
+        {
+            return log.GetLast().time;
+        }        
+    }
+
+    public T GetPrev ()
+    {
+        CleanLog();
+        if(log.Size > 2)
+        {
+            return log.GetRecent(1).value;
+        }
+        else
+        {
+            return log.GetLast().value;
+        }
+    }
+
+
 
     public void Set (T value)
     {

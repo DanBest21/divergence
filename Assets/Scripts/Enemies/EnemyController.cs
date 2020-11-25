@@ -126,7 +126,20 @@ public class EnemyController : MonoBehaviour
         UpdateFovColor();
         if(canSeePlayer.Get())
         {
-            transform.up = pursuitTarget.Get() - (Vector2)transform.position;
+
+            Vector2 a = pursuitTarget.GetPrev();
+            Vector2 b = pursuitTarget.Get();
+
+            float t = TimeManager.Instance.CurrentTime - pursuitTarget.GetTime();
+            t /= pursuitTarget.GetTime() - pursuitTarget.GetPrevTime();
+            if(float.IsNaN(t))
+            {
+                t = 1;
+            }
+
+            Vector2 c = Vector2.Lerp(a, b, t);
+
+            transform.up = c - (Vector2)transform.position;
         }
     }
 
@@ -166,14 +179,16 @@ public class EnemyController : MonoBehaviour
     void StationaryUpdate ()
     {
 
-        if (Vector2.Distance(transform.position, stationaryTarget) > stationaryTolerance 
-            && TimeManager.Instance.Flow > 0)
+        if (Vector2.Distance(transform.position, stationaryTarget) > stationaryTolerance)
         {
-            if(path == null)
+            if(TimeManager.Instance.Flow > 0)
             {
-                UpdatePath(stationaryTarget);
+                if(path == null)
+                {
+                    UpdatePath(stationaryTarget);
+                }
+                FollowPath(patrolSpeed);
             }
-            FollowPath(patrolSpeed);
             RotateToFaceMotion();
         }
         else
