@@ -27,6 +27,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
         if(!IsAlive)
         {
             if(Input.GetKeyDown(KeyCode.R))

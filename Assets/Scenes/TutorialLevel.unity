@@ -17956,22 +17956,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -1235300098829901278, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
-      propertyPath: viewRadius
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: -1235300098829901278, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
-      propertyPath: meshResolution
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -1235300098829901278, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
-      propertyPath: edgeDetectionThreshold
-      value: 22
-      objectReference: {fileID: 0}
-    - target: {fileID: 1945543330252939992, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
-      propertyPath: collisionMask.m_Bits
-      value: 512
-      objectReference: {fileID: 0}
+    - target: {fileID: 537847356, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
+      propertyPath: fp
+      value: 
+      objectReference: {fileID: 1114995870}
     - target: {fileID: 1945543330252939994, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
       propertyPath: m_Name
       value: Player
@@ -18024,6 +18012,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1945543330252939997, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
