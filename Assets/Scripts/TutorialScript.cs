@@ -68,8 +68,6 @@ public class TutorialScript : MonoBehaviour
         {
             text.text = "";
         }
-
-        Debug.Log((int)(Time.deltaTime * 1000));
     }
 
     public void Trigger (BoxCollider2D trigger, int id)
@@ -82,7 +80,6 @@ public class TutorialScript : MonoBehaviour
         }
         if(id == 1)
         {
-            Debug.Log("Trigger1");
             text.text = "Pick up the knife";
             trigger.enabled = false;
             door.SetActive(false);

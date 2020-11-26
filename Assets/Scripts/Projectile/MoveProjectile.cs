@@ -37,6 +37,9 @@ public class MoveProjectile : MonoBehaviour
 
     public bool HitEnemy { get; private set; } = false;
 
+    [SerializeField]
+    private MeshRenderer meshRenderer;
+
     public void Setup(Vector2 direction, Mesh mesh, FireProjectile fireProjectile)
     {
         startPoint = transform.position;
@@ -77,6 +80,7 @@ public class MoveProjectile : MonoBehaviour
                 objectHit.transform.gameObject.GetComponent<EnemyController>().Kill();
                 audioSource.PlayOneShot(enemyDeathSound);
                 HitEnemy = true;
+                meshRenderer.enabled = false;
             }
             else
             {
@@ -109,6 +113,11 @@ public class MoveProjectile : MonoBehaviour
         float maxPossibleDistance = speed * timeSinceThrow;
         float currentDistance = Vector2.Distance(startPoint, transform.position);
         float newDistance = Mathf.Min(currentDistance, maxPossibleDistance);
+
+        if(Mathf.Abs(currentDistance - newDistance) > 0)
+        {
+            meshRenderer.enabled = true;
+        }
 
         Vector3 position = startPoint + (Vector3)direction.normalized * newDistance;
 

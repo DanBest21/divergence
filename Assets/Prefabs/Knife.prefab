@@ -131,6 +131,7 @@ MonoBehaviour:
   projectileHitSound: {fileID: 8300000, guid: 1313cf151dfb92145bdcb774decb7ae1, type: 3}
   enemyDeathSound: {fileID: 8300000, guid: 577093dd8ed806e41b681f0eee27765b, type: 3}
   speed: 35
+  meshRenderer: {fileID: 418054173870144783}
 --- !u!61 &827563008829178060
 BoxCollider2D:
   m_ObjectHideFlags: 0
