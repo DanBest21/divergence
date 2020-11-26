@@ -25,7 +25,12 @@ public class CharacterController2D : MonoBehaviour
 
             motion = motion.normalized;
 
-            motion = motion * free + (Vector2)Vector3.Project(motion * slide, Vector2.Perpendicular(hit.normal));
+            Vector3 freeMotion = motion * free;
+            Vector2 slideMotion = Vector3.Project(motion * slide, Vector2.Perpendicular(hit.normal));
+
+            RaycastHit2D hit2 = Physics2D.CircleCast(transform.position + freeMotion, collisionRadius, slideMotion, slideMotion.magnitude, collisionMask.value);
+
+            motion = (Vector2)freeMotion + slideMotion.normalized * Mathf.Max(((hit2 ? hit2.distance : slideMotion.magnitude) - skinWidth), 0);
         }
 
 
