@@ -35,7 +35,7 @@ public class TutorialScript : MonoBehaviour
         aimLine.SetActive(false);
         text.text = "";
         door.SetActive(true);
-        text.text = "Level 01 - Knives and How To Throw Them";
+        text.text = "Level 01 - Tutorial";
     }
 
     // Update is called once per frame

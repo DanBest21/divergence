@@ -14,7 +14,12 @@ public class DeathScreen : MonoBehaviour
     private PostProcessVolume volume;
     [SerializeField]
     private RectTransform deathUI;
+    [SerializeField]
+    private AudioClip gameOverNoise;
+    [SerializeField]
+    private AudioSource audioSource;
 
+    private bool triggered = false;
     private float weightVelocity = 0;
 
     public static readonly float deathTime = 2f;
@@ -30,6 +35,14 @@ public class DeathScreen : MonoBehaviour
         {
             volume.weight = Mathf.SmoothDamp(volume.weight, 1, ref weightVelocity, deathTime);
             deathUI.gameObject.SetActive(true);
+
+            if (!triggered)
+            {
+                triggered = true;
+                
+                audioSource.clip = gameOverNoise;
+                audioSource.Play();
+            }
         }
     }
 
