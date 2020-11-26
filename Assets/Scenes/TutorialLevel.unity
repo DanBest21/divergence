@@ -1184,11 +1184,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: stationaryTarget.x
-      value: 99.35
+      value: 98.5
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: stationaryTarget.y
-      value: -14.6
+      value: -13.25
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: patrolRoute.Array.size
@@ -1232,11 +1232,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447679, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 99.35
+      value: 98.52
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447679, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -14.6
+      value: -13.17
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447679, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: m_LocalPosition.z
