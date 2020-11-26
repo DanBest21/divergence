@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene("MainMenu");
+            TutorialScript.checkpoint = -1;
         }
         if(!IsAlive)
         {
