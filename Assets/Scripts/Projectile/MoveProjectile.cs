@@ -54,6 +54,8 @@ public class MoveProjectile : MonoBehaviour
 
     void LateUpdate()
     {
+        transform.position = new Vector3(transform.position.x, transform.position.y, 20);
+
         bool timeRewinding = TimeManager.Instance.Flow < 0;
 
         if (timeRewinding) // && TimeManager.Instance.CurrentTime <= timeLanded)
@@ -64,6 +66,8 @@ public class MoveProjectile : MonoBehaviour
         else if (!hasStopped)
         {
             DrawProjectile();
+
+            
         }
     }
 
@@ -80,10 +84,6 @@ public class MoveProjectile : MonoBehaviour
                 objectHit.transform.gameObject.GetComponent<EnemyController>().Kill();
                 audioSource.PlayOneShot(enemyDeathSound);
                 HitEnemy = true;
-                if(TutorialScript.Instance != null && !TutorialScript.Instance.LearnedRewind)
-                {
-                    meshRenderer.enabled = false;
-                }
                 
             }
             else

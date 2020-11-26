@@ -29,6 +29,7 @@ public class TutorialScript : MonoBehaviour
     readonly string throwPrompt = "Left click to throw";
     readonly string levelPrompt = "Level 01 - Tutorial";
     readonly string shiftPrompt = "Tap shift to rewind time";
+    readonly string rewindPrompt = "The world around you rewinds, but you are unchanged";
 
     int maxID = -1;
 
@@ -66,7 +67,12 @@ public class TutorialScript : MonoBehaviour
             }
         }
 
-        if(text.text.Equals(throwPrompt) && Input.GetKeyDown(KeyCode.Mouse0))
+        if(text.text == shiftPrompt && Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            text.text = rewindPrompt;
+            maxID = 3;
+        }
+
         if(text.text.Equals(throwPrompt) && Input.GetKeyDown(KeyCode.Mouse0))
         {
             text.text = "";
@@ -87,7 +93,7 @@ public class TutorialScript : MonoBehaviour
             trigger.enabled = false;
             door.SetActive(false);
         }
-        if(id == 2 && hasKnife)
+        if(id == 2 && hasKnife && text.text != rewindPrompt)
         {
             text.text = shiftPrompt;
             LearnedRewind = true;
