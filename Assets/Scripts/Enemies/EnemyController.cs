@@ -77,6 +77,10 @@ public class EnemyController : MonoBehaviour
     private Rewindable<bool> canSeePlayer = new Rewindable<bool>(false);
 
 
+    private Vector2 lastPatrolPosition = Vector2.zero;
+    private int patrolLockCount = 0;
+    private int maxPatrolLock = 10;
+
     private void Awake ()
     {
         stationaryForward = ((Vector2)(transform.rotation * Vector3.up)).normalized;
@@ -235,7 +239,26 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
+
         int pi = patrolIndex.Get();
+
+        if((Vector2)transform.position == lastPatrolPosition)
+        {
+            patrolLockCount++;
+            if(patrolLockCount > maxPatrolLock)
+            {
+                patrolIndex.Set((pi + 1) % patrolRoute.Count);
+                patrolLockCount = 0;
+                UpdatePath(patrolRoute[patrolIndex.Get()]);
+            }
+        }
+        else
+        {
+            patrolLockCount = 0;
+        }
+
+        
+
 
         Vector2 target = patrolRoute[pi];
 
@@ -250,6 +273,7 @@ public class EnemyController : MonoBehaviour
             else if (path == null && ((Vector2)transform.position - target).sqrMagnitude < 1.2f)
             {
                 patrolIndex.Set((pi + 1) % patrolRoute.Count);
+
             }
             if(path == null)
             { 
@@ -261,6 +285,7 @@ public class EnemyController : MonoBehaviour
         }
 
         RotateToFaceMotion();
+        lastPatrolPosition = transform.position;
     }
 
     void PursuitUpdate ()
