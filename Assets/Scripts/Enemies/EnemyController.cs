@@ -66,6 +66,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private Material inSightFovMaterial;
 
+    [SerializeField]
+    private float killDistance = 1.1f;
+
     private float stationaryTolerance = 1;
 
     private Rewindable<bool> canSeePlayer = new Rewindable<bool>(false);
@@ -87,6 +90,10 @@ public class EnemyController : MonoBehaviour
 
     private void Update ()
     {
+        if(Mathf.Abs(TimeManager.Instance.Flow) < 0.01f)
+        {
+            return;
+        }
         if(TimeManager.Instance.Flow < 0)
         {
             path = null;
@@ -151,6 +158,11 @@ public class EnemyController : MonoBehaviour
             }
             canSeePlayer.Set(true);
             mode.Set(Mode.Pursuing);
+            if(Vector2.Distance(transform.position, interests[0].position) < killDistance)
+            {
+                CameraFollow.Main.Kick(interests[0].position - transform.position);
+                interests[0].GetComponent<PlayerMovement>().Kill();
+            }
             
         }
         else

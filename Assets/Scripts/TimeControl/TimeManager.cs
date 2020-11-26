@@ -20,6 +20,15 @@ public class TimeManager : MonoBehaviour
     [SerializeField]
     private FireProjectile fireProjectile = null;
 
+    [SerializeField]
+    private PlayerMovement player = null;
+
+    private float stopTimeVelocity = 0;
+
+    private float rewindVelocity = 0;
+
+    private bool rewind = false;
+
     private void Awake ()
     {
         if(Instance == null)
@@ -44,16 +53,32 @@ public class TimeManager : MonoBehaviour
 
     private void Update ()
     {
+        if(!player.IsAlive)
+        {
+            Flow = Mathf.Clamp01(Mathf.SmoothDamp(Flow, 0, ref stopTimeVelocity, DeathScreen.deathTime));
+            return;
+        }
+
         if(!fireProjectile.CanFire())
         {
             if(Input.GetKeyDown(KeyCode.LeftShift))
             {
-                Flow = -2;
+                rewind = true;
             }
         }
         else
         {
-            Flow = 1;
+            rewind = false;
+            Flow = Mathf.Max(Mathf.SmoothDamp(Flow, 1, ref rewindVelocity, 0.1f), -1);
+            if(Flow > 0.9f)
+            {
+                Flow = 1f;
+            }
+        }
+
+        if(rewind)
+        {
+            Flow = Mathf.Min(Mathf.SmoothDamp(Flow, -2, ref rewindVelocity, 0.2f), 0);
         }
 
         CurrentTime += Time.deltaTime * Flow;

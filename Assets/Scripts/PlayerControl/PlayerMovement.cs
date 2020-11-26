@@ -30,6 +30,11 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            Kill();
+        }
+
         input = new Vector2(
             Input.GetAxisRaw("Horizontal"), 
             Input.GetAxisRaw("Vertical")

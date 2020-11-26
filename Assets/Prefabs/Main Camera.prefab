@@ -99,6 +99,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   smoothTime: 0.2
+  kickSpeed: 0
+  kickSlowdown: 0
+  kickReturn: 0
 --- !u!114 &5761798112112176348
 MonoBehaviour:
   m_ObjectHideFlags: 0

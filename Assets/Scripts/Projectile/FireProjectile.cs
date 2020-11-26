@@ -35,7 +35,7 @@ public class FireProjectile : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0) && canFire && TimeManager.Instance.Flow > 0)
+        if (Input.GetKey(KeyCode.Mouse0) && canFire && TimeManager.Instance.Flow >= 1)
         {
             canFire = false;
 
