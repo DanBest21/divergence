@@ -102,23 +102,41 @@ public class TransformRewind : MonoBehaviour
         return log.GetLast().position;
     }
 
-    public Vector2 GetLastMotion ()
+    public float GetRecentLogTime (int i)
+    {
+        return log.GetRecent(Mathf.Clamp(i, 0, log.Size - 1)).time;
+    }
+
+    public Vector2 GetLastMotion (out float deltaTime)
     {
         Vector2 currentPos = log.GetLast().position;
-        Vector2 prev = log.GetRecent(1).position;
-        int i = 2;
+        Vector2 prev = log.GetRecent(Mathf.Min(log.Size - 1, 1)).position;
+        int i = (Mathf.Min(log.Size, 2));
         while((currentPos - prev).sqrMagnitude < 0.01f && i < log.Size - 1)
         {
             prev = log.GetRecent(i).position;
             i++;
         }
+        deltaTime = log.GetLast().time - log.GetRecent(i - 1).time;
         return (currentPos - prev).normalized;
+    }
+
+    public Vector2 GetLastMotion ()
+    {
+        return GetLastMotion(out float ignored);
     }
 
     public Vector2 GetSmoothedForward (Vector2 newPosition, float smoothTime)
     {
         if(log.Size == 0) return Vector2.zero;
         if(log.Size < 3) return (newPosition - log.GetLast().position);
+
+        Vector2 simple = GetLastMotion(out float simpleDT);
+
+        if(simpleDT > smoothTime)
+        {
+            return simple;
+        }
 
         Vector2 mid = log.GetRecent(1).position;
         Vector2 prev = log.GetRecent(2).position;

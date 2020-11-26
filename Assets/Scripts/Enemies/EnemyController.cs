@@ -220,7 +220,10 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            Vector2 up = transformRewind.GetSmoothedForward((Vector2)transform.position + stationaryForward, 0.3f);
+            Vector2 up = Vector2.Lerp(
+                transformRewind.GetLastMotion(),
+                stationaryForward,
+                (TimeManager.Instance.CurrentTime - transformRewind.GetRecentLogTime(1)) / 0.3f);
         
             if(up == Vector2.zero || TimeManager.Instance.Flow < 0)
             {
@@ -258,9 +261,6 @@ public class EnemyController : MonoBehaviour
             patrolLockCount = 0;
         }
         lastPatrolPosition = transform.position;
-
-
-
 
         Vector2 target = patrolRoute[pi];
 

@@ -44,7 +44,7 @@ public class CircleStack<T>
         int target = top - index;
         if(index >= size)
         {
-            throw new IndexOutOfRangeException("Fewer items in buffer than request needs");
+            throw new IndexOutOfRangeException("Fewer items in buffer than request needs. Has " + Size + " wants " + index);
         }
         if (target < 0)
         {

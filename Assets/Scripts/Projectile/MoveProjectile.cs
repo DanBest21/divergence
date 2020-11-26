@@ -80,7 +80,11 @@ public class MoveProjectile : MonoBehaviour
                 objectHit.transform.gameObject.GetComponent<EnemyController>().Kill();
                 audioSource.PlayOneShot(enemyDeathSound);
                 HitEnemy = true;
-                meshRenderer.enabled = false;
+                if(TutorialScript.Instance != null && !TutorialScript.Instance.LearnedRewind)
+                {
+                    meshRenderer.enabled = false;
+                }
+                
             }
             else
             {
