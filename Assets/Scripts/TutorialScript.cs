@@ -59,6 +59,7 @@ public class TutorialScript : MonoBehaviour
                 player.transform.position.y,
                 CameraFollow.Main.transform.position.z);
             LearnedRewind = true;
+            text.text = "";
         }
 
 
