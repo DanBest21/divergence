@@ -2433,7 +2433,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.4
+  m_fontSize: 0.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -12461,6 +12461,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 664697215034913054, guid: e879a06349c6afa43bac1674b83e6104, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 2090287509}
     - target: {fileID: 5100619421740747474, guid: e879a06349c6afa43bac1674b83e6104, type: 3}
       propertyPath: m_Name
       value: VictoryScreen
@@ -21491,7 +21495,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 32.00401, y: 20}
+  m_SizeDelta: {x: 35.555557, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3057911493170077494
 MonoBehaviour:
