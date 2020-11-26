@@ -13117,6 +13117,8 @@ MonoBehaviour:
   maxLogTime: 30
   fireProjectile: {fileID: 1114995870}
   player: {fileID: 265291384}
+  maxRewindTime: 10
+  timerNoise: {fileID: 8300000, guid: c3b896c926dd563439927c4414183756, type: 3}
 --- !u!4 &1233214719
 Transform:
   m_ObjectHideFlags: 0

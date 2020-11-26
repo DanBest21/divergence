@@ -23,11 +23,22 @@ public class TimeManager : MonoBehaviour
     [SerializeField]
     private PlayerMovement player = null;
 
+    [SerializeField]
+    [Range(5, 60)]
+    private float maxRewindTime;
+    private float remainingTime;
+
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip timerNoise;
+
     private float stopTimeVelocity = 0;
 
     private float rewindVelocity = 0;
 
     private bool rewind = false;
+    private bool timerTriggered = false;
 
     private void Awake ()
     {
@@ -39,6 +50,10 @@ public class TimeManager : MonoBehaviour
         {
             Debug.LogError("Multiple Time Managers Detected! Only one should exist per scene.");
         }
+
+        remainingTime = maxRewindTime;
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.loop = true;
     }
 
     public void AddLateUpdateListener (UnityAction action)
@@ -61,9 +76,23 @@ public class TimeManager : MonoBehaviour
 
         if(!fireProjectile.CanFire())
         {
-            if(Input.GetKeyDown(KeyCode.LeftShift))
+            remainingTime -= Time.deltaTime;
+
+            if (!timerTriggered && !rewind && TutorialScript.Instance != null && TutorialScript.Instance.LearnedRewind)
             {
+                audioSource.clip = timerNoise;
+                audioSource.Play();
+
+                timerTriggered = true;
+            }
+            
+            if(Input.GetKeyDown(KeyCode.LeftShift) || (remainingTime <= 0 && TutorialScript.Instance != null && TutorialScript.Instance.LearnedRewind))
+            {
+                audioSource.Stop();
+                timerTriggered = false;
+
                 rewind = true;
+                remainingTime = maxRewindTime;
             }
         }
         else
