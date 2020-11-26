@@ -26,6 +26,9 @@ public class TutorialScript : MonoBehaviour
 
     readonly string throwPrompt = "Left click to throw";
     readonly string levelPrompt = "Level 01 - Tutorial";
+    readonly string shiftPrompt = "Tap shift to rewind time";
+
+    int maxID = -1;
 
     // Start is called before the first frame update
     void Start()
@@ -52,18 +55,30 @@ public class TutorialScript : MonoBehaviour
             text.text = throwPrompt;
         }
 
+        if(maxID < 3 && fp.enabled && fp.Landed)
+        {
+            if(!fp.HitEnemy)
+            {
+                text.text = shiftPrompt;
+            }
+        }
+
         if(text.text.Equals(throwPrompt) && Input.GetKeyDown(KeyCode.Mouse0))
         if(text.text.Equals(throwPrompt) && Input.GetKeyDown(KeyCode.Mouse0))
         {
             text.text = "";
         }
+
+        Debug.Log((int)(Time.deltaTime * 1000));
     }
 
     public void Trigger (BoxCollider2D trigger, int id)
     {
+        maxID = Mathf.Max(maxID, id);
         if(id == 0 && text.text == levelPrompt)
         {
             text.text = "";
+            
         }
         if(id == 1)
         {
@@ -74,7 +89,7 @@ public class TutorialScript : MonoBehaviour
         }
         if(id == 2 && hasKnife)
         {
-            text.text = "Tap shift";
+            text.text = shiftPrompt;
         }
         if(id == 3)
         {

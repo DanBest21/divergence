@@ -166,7 +166,7 @@ public class EnemyController : MonoBehaviour
 
             if (!canSeePlayer.Get())
             {
-                audioSource.PlayOneShot(alertNoise);
+                audioSource.PlayOneShot(alertNoise, 0.25f);
             }
 
             canSeePlayer.Set(true);

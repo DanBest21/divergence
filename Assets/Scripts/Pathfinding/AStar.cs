@@ -11,9 +11,9 @@ using UnityEngine;
 class AStar
 {
     bool[,] walkable;
-    float[,] gScores;
-    Vector2Int[,] cameFrom;
-    bool[,] visited;
+    static float[,] gScores;
+    static Vector2Int[,] cameFrom;
+    static bool[,] visited;
     PriorityQueue<Vector2Int> queue;
 
     Vector2Int start;
@@ -47,20 +47,29 @@ class AStar
         this.start = start;
         this.dest = dest;
 
-        gScores = new float[x, y];
-
-        for(int i = 0; i < x; i++)
+        if(cameFrom == null || cameFrom.GetLength(0) != x || cameFrom.GetLength(1) != y)
         {
-            for(int j = 0; j < y; j++)
+            gScores = new float[x, y];
+            cameFrom = new Vector2Int[x, y];
+            visited = new bool[x, y];
+
+        }
+        else
+        {
+            for(int i = 0; i < x; i++)
             {
-                gScores[i, j] = Mathf.Infinity;
+                for(int j = 0; j < y; j++)
+                {
+                    gScores[i, j] = Mathf.Infinity;
+                    visited[i, j] = false;
+                }
             }
         }
 
-        cameFrom = new Vector2Int[x, y];
-        visited = new bool[x, y];
         queue = new PriorityQueue<Vector2Int>(64);
         minDistance = Vector2.Distance(start, dest);
+
+
     }
 
     public List<Vector2Int> GetPath ()

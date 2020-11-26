@@ -32,11 +32,13 @@ public class VictoryTrigger : MonoBehaviour
         {
             volume.weight = 0;
             victoryUI.gameObject.SetActive(false);
+            volume.gameObject.SetActive(false);
         }
         else
         {
             volume.weight = Mathf.SmoothDamp(volume.weight, 1, ref weightVelocity, 1);
             victoryUI.gameObject.SetActive(true);
+            volume.gameObject.SetActive(true);
 
             if (!triggered)
             {

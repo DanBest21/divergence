@@ -30,11 +30,13 @@ public class DeathScreen : MonoBehaviour
         {
             volume.weight = 0;
             deathUI.gameObject.SetActive(false);
+            volume.gameObject.SetActive(false);
         }
         else
         {
             volume.weight = Mathf.SmoothDamp(volume.weight, 1, ref weightVelocity, deathTime);
             deathUI.gameObject.SetActive(true);
+            volume.gameObject.SetActive(true);
 
             if (!triggered)
             {

@@ -37,6 +37,10 @@ public class FireProjectile : MonoBehaviour
 
     public float PickupRange() { return pickupRange; }
 
+    public bool Landed { get { return !canFire && moveProjectile != null && moveProjectile.HasStopped(); } }
+    public bool HitEnemy { get { return Landed && moveProjectile.HitEnemy; } }
+
+
     private void Awake()
     {
         audioSource = gameObject.AddComponent<AudioSource>();

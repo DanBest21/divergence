@@ -35,6 +35,8 @@ public class MoveProjectile : MonoBehaviour
 
     public float Speed() { return speed; }
 
+    public bool HitEnemy { get; private set; } = false;
+
     public void Setup(Vector2 direction, Mesh mesh, FireProjectile fireProjectile)
     {
         startPoint = transform.position;
@@ -74,6 +76,7 @@ public class MoveProjectile : MonoBehaviour
             {
                 objectHit.transform.gameObject.GetComponent<EnemyController>().Kill();
                 audioSource.PlayOneShot(enemyDeathSound);
+                HitEnemy = true;
             }
             else
             {
