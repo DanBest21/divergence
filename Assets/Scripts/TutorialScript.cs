@@ -28,7 +28,7 @@ public class TutorialScript : MonoBehaviour
     public bool LearnedRewind { get; private set; } = false;
 
     readonly string throwPrompt = "Left click to throw";
-    readonly string levelPrompt = "Level 01 - Tutorial";
+    readonly string levelPrompt = "Use W A S D keys to move";
     readonly string shiftPrompt = "Tap shift to rewind time and retrieve your knife";
     readonly string rewindPrompt = "The world around you rewinds, but you are unchanged";
 

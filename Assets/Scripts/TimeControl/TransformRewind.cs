@@ -56,6 +56,8 @@ public class TransformRewind : MonoBehaviour
         else if(ghost != null)
         {
             ghost.position = transform.position;
+
+            ghost.position += Vector3.forward;
         }
     }
 
