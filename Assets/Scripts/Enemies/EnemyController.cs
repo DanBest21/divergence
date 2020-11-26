@@ -163,6 +163,7 @@ public class EnemyController : MonoBehaviour
             {
                 CameraFollow.Main.Kick(interests[0].position - transform.position);
                 interests[0].GetComponent<PlayerMovement>().Kill();
+                this.enabled = false;
             }
             
         }
@@ -232,6 +233,10 @@ public class EnemyController : MonoBehaviour
             {
                 patrolIndex.Set((pi + 1) % patrolRoute.Count);
                 path = null;
+            }
+            else if (path == null && ((Vector2)transform.position - target).sqrMagnitude < 1.2f)
+            {
+                patrolIndex.Set((pi + 1) % patrolRoute.Count);
             }
             if(path == null)
             { 

@@ -13,7 +13,7 @@ public class TimeManager : MonoBehaviour
 
     public float CurrentTime { get; private set; }
 
-    public float Flow { get; set; } = 1;
+    public float Flow { get; set; } = 0;
 
     private UnityEvent onLateUpdateEvent = new UnityEvent();
 

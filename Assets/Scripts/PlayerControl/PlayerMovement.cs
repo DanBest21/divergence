@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CharacterController2D))]
 public class PlayerMovement : MonoBehaviour
@@ -28,11 +29,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if(!IsAlive)
         {
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                Scene scene = SceneManager.GetActiveScene();
+                SceneManager.LoadScene(scene.name);
+            }
             return;
-        }
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            Kill();
         }
 
         input = new Vector2(

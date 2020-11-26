@@ -92,11 +92,11 @@ public class FieldOfView : MonoBehaviour
             
         foreach (Collider2D point in pointsInCircle)
         {
-            Vector3 directionToPoint = (point.transform.position - transform.position).normalized;
+            Vector2 directionToPoint = (point.transform.position - transform.position).normalized;
 
             if (Vector2.Angle(transform.up, directionToPoint) <= viewAngle / 2)
             {
-                float distanceToPoint = Vector3.Distance(transform.position, point.transform.position);
+                float distanceToPoint = Vector2.Distance(transform.position, point.transform.position);
 
                 if (!Physics2D.Raycast(transform.position, directionToPoint, distanceToPoint, obstructions))
                 {
