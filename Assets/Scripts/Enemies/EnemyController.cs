@@ -249,6 +249,7 @@ public class EnemyController : MonoBehaviour
             {
                 patrolIndex.Set((pi + 1) % patrolRoute.Count);
                 patrolLockCount = 0;
+                UpdatePath(patrolRoute[patrolIndex.Get()]);
             }
         }
         else
@@ -272,6 +273,7 @@ public class EnemyController : MonoBehaviour
             else if (path == null && ((Vector2)transform.position - target).sqrMagnitude < 1.2f)
             {
                 patrolIndex.Set((pi + 1) % patrolRoute.Count);
+
             }
             if(path == null)
             { 
