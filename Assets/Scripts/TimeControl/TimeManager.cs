@@ -76,17 +76,24 @@ public class TimeManager : MonoBehaviour
 
         if(!fireProjectile.CanFire())
         {
-            remainingTime -= Time.deltaTime;
-
-            if (!timerTriggered && !rewind && TutorialScript.Instance != null && TutorialScript.Instance.LearnedRewind)
+            if (!timerTriggered && !rewind && TutorialScript.Instance != null)
             {
-                audioSource.clip = timerNoise;
-                audioSource.Play();
+                if (TutorialScript.Instance.LearnedRewind)
+                {
+                    audioSource.clip = timerNoise;
+                    audioSource.Play();
+                }
+                else
+                {
+                    remainingTime = maxLogTime;
+                }
 
                 timerTriggered = true;
             }
-            
-            if(Input.GetKeyDown(KeyCode.LeftShift) || (remainingTime <= 0 && TutorialScript.Instance != null && TutorialScript.Instance.LearnedRewind))
+
+            remainingTime -= Time.deltaTime;
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) || remainingTime <= 0)
             {
                 audioSource.Stop();
                 timerTriggered = false;
