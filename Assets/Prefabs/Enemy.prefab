@@ -218,14 +218,15 @@ MonoBehaviour:
   stationaryTarget: {x: 0, y: 0}
   patrolRoute: []
   destinationWaitTime: 3
-  patrolSpeed: 5
-  pursuitSpeed: 10
+  patrolSpeed: 7
+  pursuitSpeed: 12
   aliveMaterial: {fileID: 2100000, guid: 8ffd6a2ad662b7e4ebbd51a5356bae18, type: 2}
   deadMaterial: {fileID: 2100000, guid: bef7e84e8260f994c9ca1d087624ed8f, type: 2}
   fovMeshRenderer: {fileID: 1171315983}
   normalFovMaterial: {fileID: 2100000, guid: 7116797e02b9f194dad20c38a41d1efb, type: 2}
   pursuingFovMaterial: {fileID: 2100000, guid: 754a612996bfb3346840aeb15f1730b9, type: 2}
   inSightFovMaterial: {fileID: 2100000, guid: b3d981dc711087246bd8b1de8675be4e, type: 2}
+  alertNoise: {fileID: 8300000, guid: b81fa9f591168b64ebdc9db96db4cfca, type: 3}
   killDistance: 1.1
 --- !u!114 &-5231898543639123658
 MonoBehaviour:
@@ -239,7 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9653837a14e1954fa971f7995765d06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 6
+  viewRadius: 7
   viewAngle: 60
   interestPoints:
     serializedVersion: 2

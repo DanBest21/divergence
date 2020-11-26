@@ -1214,11 +1214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: patrolSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
-      propertyPath: pursuitSpeed
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: stationaryTarget.x
@@ -1910,7 +1906,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: patrolSpeed
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: stationaryTarget.x
@@ -3499,7 +3495,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: patrolSpeed
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: stationaryTarget.x
@@ -5615,6 +5611,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1665983410}
     m_Modifications:
+    - target: {fileID: -5231898543639123658, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
+      propertyPath: viewRadius
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 705852952566447617, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: m_Name
       value: Enemy (9)
@@ -8172,7 +8172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: patrolSpeed
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: stationaryTarget.x
@@ -14735,6 +14735,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
+      propertyPath: patrolSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: stationaryTarget.x
       value: -7.25
       objectReference: {fileID: 0}
@@ -15492,10 +15496,6 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
-      propertyPath: patrolSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: stationaryTarget.x
       value: -7.25
       objectReference: {fileID: 0}
@@ -15803,10 +15803,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1334154889}
     m_Modifications:
-    - target: {fileID: -5231898543639123658, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
-      propertyPath: viewRadius
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 705852952566447617, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -15817,7 +15813,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: patrolSpeed
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: stationaryTarget.x
@@ -16928,10 +16924,6 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
-      propertyPath: patrolSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 705852952566447618, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: stationaryTarget.x
       value: -7.25
       objectReference: {fileID: 0}
@@ -17137,6 +17129,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1665983410}
     m_Modifications:
+    - target: {fileID: -5231898543639123658, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
+      propertyPath: viewRadius
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 705852952566447617, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
       propertyPath: m_Name
       value: Enemy (8)
@@ -20695,10 +20691,6 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1945543330252939995, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
-      propertyPath: speed
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1945543330252939995, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 735857529}
@@ -20933,13 +20925,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1884327848, guid: 7c261bc7db73ce34abed4716a87ff009, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 2090287509}
+    - target: {fileID: 1884327848, guid: 7c261bc7db73ce34abed4716a87ff009, type: 3}
+      propertyPath: victoryNoise
+      value: 
+      objectReference: {fileID: 8300000, guid: fe7c8fa0f98d28248bd4ae3a7c37a12a, type: 3}
     - target: {fileID: 3779407453182342187, guid: 7c261bc7db73ce34abed4716a87ff009, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -988.9
+      value: -993.8
       objectReference: {fileID: 0}
     - target: {fileID: 3779407453182342187, guid: 7c261bc7db73ce34abed4716a87ff009, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -481.82
+      value: -482.06
       objectReference: {fileID: 0}
     - target: {fileID: 7777270288164893157, guid: 7c261bc7db73ce34abed4716a87ff009, type: 3}
       propertyPath: m_Name

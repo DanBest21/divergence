@@ -413,7 +413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
-  speed: 10
+  speed: 8
 --- !u!114 &1945543330252939992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,6 +476,7 @@ MonoBehaviour:
   pickup:
     serializedVersion: 2
     m_Bits: 4096
+  projectileFireSound: {fileID: 8300000, guid: 938d6aa9613faa64daea927849d199da, type: 3}
 --- !u!58 &416727172
 CircleCollider2D:
   m_ObjectHideFlags: 0

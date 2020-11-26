@@ -25,6 +25,10 @@ public class FireProjectile : MonoBehaviour
     [SerializeField]
     private LayerMask pickup;
 
+    [SerializeField]
+    private AudioClip projectileFireSound;
+    private AudioSource audioSource;
+
     public GameObject Projectile() { return projectile; }
 
     public bool CanFire() { return canFire; }
@@ -32,6 +36,11 @@ public class FireProjectile : MonoBehaviour
     public MeshFilter MeshFilter() { return meshFilter; }
 
     public float PickupRange() { return pickupRange; }
+
+    private void Awake()
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+    }
 
     private void Update()
     {
@@ -48,6 +57,8 @@ public class FireProjectile : MonoBehaviour
             visualProjectile.SetActive(false);
 
             Vector2 direction = ((Vector2)(mousePos - transform.position)).normalized;
+
+            audioSource.PlayOneShot(projectileFireSound);
 
             moveProjectile = firedProjectile.GetComponent<MoveProjectile>();
             moveProjectile.Setup(direction, meshFilter.mesh, this);

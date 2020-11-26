@@ -128,6 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4abc94e954e65dc4d829fd0e7f05082a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectileHitSound: {fileID: 8300000, guid: 1313cf151dfb92145bdcb774decb7ae1, type: 3}
+  enemyDeathSound: {fileID: 8300000, guid: 577093dd8ed806e41b681f0eee27765b, type: 3}
   speed: 35
 --- !u!61 &827563008829178060
 BoxCollider2D:

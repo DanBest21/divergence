@@ -41,6 +41,7 @@ public class DeathScreen : MonoBehaviour
                 triggered = true;
                 
                 audioSource.clip = gameOverNoise;
+                audioSource.loop = false;
                 audioSource.Play();
             }
         }

@@ -16,6 +16,12 @@ public class MoveProjectile : MonoBehaviour
     private Mesh mesh;
 
     [SerializeField]
+    private AudioClip projectileHitSound;
+    [SerializeField]
+    private AudioClip enemyDeathSound;
+    private AudioSource audioSource;
+
+    [SerializeField]
     [Range(1, 100)]
     private float speed;
 
@@ -38,6 +44,7 @@ public class MoveProjectile : MonoBehaviour
 
         timeStarted = TimeManager.Instance.CurrentTime;
         hasStopped = false;
+        audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     void LateUpdate()
@@ -62,10 +69,15 @@ public class MoveProjectile : MonoBehaviour
         RaycastHit2D objectHit = Physics2D.Raycast(transform.position, direction, speed * Time.deltaTime, layerMask);
 
         if (objectHit)
-        {            
+        {
             if ((LayerMask.GetMask("Enemies") & 1 << objectHit.transform.gameObject.layer) != 0)
             {
                 objectHit.transform.gameObject.GetComponent<EnemyController>().Kill();
+                audioSource.PlayOneShot(enemyDeathSound);
+            }
+            else
+            {
+                audioSource.PlayOneShot(projectileHitSound);
             }
             
             transform.position = objectHit.point + objectHit.normal / 10;

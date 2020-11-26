@@ -9,8 +9,13 @@ public class VictoryTrigger : MonoBehaviour
     RectTransform victoryUI;
     [SerializeField]
     private PostProcessVolume volume;
+    [SerializeField]
+    private AudioClip victoryNoise;
+    [SerializeField]
+    private AudioSource audioSource;
 
     private bool won = false;
+    private bool triggered = false;
     private float weightVelocity = 0;
 
 
@@ -32,6 +37,24 @@ public class VictoryTrigger : MonoBehaviour
         {
             volume.weight = Mathf.SmoothDamp(volume.weight, 1, ref weightVelocity, 1);
             victoryUI.gameObject.SetActive(true);
+
+            if (!triggered)
+            {
+                triggered = true;
+
+                StartCoroutine(PlayVictorySound());
+            }
         }
+    }
+
+    IEnumerator PlayVictorySound()
+    {
+        float time = audioSource.time;
+        
+        audioSource.Stop();
+        audioSource.PlayOneShot(victoryNoise);
+        yield return new WaitForSeconds(victoryNoise.length);
+        audioSource.time = time;
+        audioSource.Play();
     }
 }

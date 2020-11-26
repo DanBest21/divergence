@@ -66,6 +66,10 @@ public class EnemyController : MonoBehaviour
     private Material inSightFovMaterial;
 
     [SerializeField]
+    private AudioClip alertNoise;
+    private AudioSource audioSource;
+
+    [SerializeField]
     private float killDistance = 1.1f;
 
     private float stationaryTolerance = 1;
@@ -82,6 +86,8 @@ public class EnemyController : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
         fov = GetComponent<FieldOfView>();
         mode = new Rewindable<Mode>(defaultMode);
+
+        audioSource = gameObject.AddComponent<AudioSource>();
 
         if(defaultMode == Mode.Pursuing)
         {
@@ -157,7 +163,14 @@ public class EnemyController : MonoBehaviour
             {
                 pursuitTarget.Set(interests[0].position);
             }
+
+            if (!canSeePlayer.Get())
+            {
+                audioSource.PlayOneShot(alertNoise);
+            }
+
             canSeePlayer.Set(true);
+
             mode.Set(Mode.Pursuing);
             if(Vector2.Distance(transform.position, interests[0].position) < killDistance)
             {

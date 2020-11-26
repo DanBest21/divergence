@@ -25,6 +25,7 @@ public class TutorialScript : MonoBehaviour
     bool hasKnife = false;
 
     readonly string throwPrompt = "Left click to throw";
+    readonly string levelPrompt = "Level 01 - Tutorial";
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +36,7 @@ public class TutorialScript : MonoBehaviour
         aimLine.SetActive(false);
         text.text = "";
         door.SetActive(true);
-        text.text = "Level 01 - Tutorial";
+        text.text = levelPrompt;
     }
 
     // Update is called once per frame
@@ -60,7 +61,7 @@ public class TutorialScript : MonoBehaviour
 
     public void Trigger (BoxCollider2D trigger, int id)
     {
-        if(id == 0 && text.text == "Level 01 - Knives and How To Throw Them")
+        if(id == 0 && text.text == levelPrompt)
         {
             text.text = "";
         }
