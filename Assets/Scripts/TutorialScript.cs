@@ -68,7 +68,7 @@ public class TutorialScript : MonoBehaviour
         }
         if(id == 2 && hasKnife)
         {
-            text.text = "Tap shift to rewind the knife";
+            text.text = "Tap shift";
         }
         if(id == 3)
         {

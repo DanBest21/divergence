@@ -327,7 +327,7 @@ public class EnemyController : MonoBehaviour
         Vector2 target = path[pathIndex];
         Vector2 maxMotion = target - (Vector2)transform.position;
         Vector2 motion = maxMotion.normalized
-            * Mathf.Min(pursuitSpeed * Time.deltaTime * TimeManager.Instance.Flow, maxMotion.magnitude);
+            * Mathf.Min(speed * Time.deltaTime * TimeManager.Instance.Flow, maxMotion.magnitude);
 
         characterController.Move(motion);
 
