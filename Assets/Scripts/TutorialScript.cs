@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TutorialScript : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class TutorialScript : MonoBehaviour
     [SerializeField]
     GameObject door;
     [SerializeField]
-    Text text;
+    TextMeshProUGUI text;
 
     bool hasKnife = false;
 
@@ -28,7 +29,7 @@ public class TutorialScript : MonoBehaviour
 
     readonly string throwPrompt = "Left click to throw";
     readonly string levelPrompt = "Level 01 - Tutorial";
-    readonly string shiftPrompt = "Tap shift to rewind time";
+    readonly string shiftPrompt = "Tap shift to rewind time and retrieve your knife";
     readonly string rewindPrompt = "The world around you rewinds, but you are unchanged";
 
     int maxID = -1;

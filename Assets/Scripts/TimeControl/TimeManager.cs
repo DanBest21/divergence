@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 public class TimeManager : MonoBehaviour
 {
@@ -26,7 +27,8 @@ public class TimeManager : MonoBehaviour
     [SerializeField]
     [Range(5, 60)]
     private float maxRewindTime;
-    private float remainingTime;
+
+    public float RemainingTime { get; private set; }
 
     private AudioSource audioSource;
 
@@ -40,6 +42,11 @@ public class TimeManager : MonoBehaviour
     private bool rewind = false;
     private bool timerTriggered = false;
 
+    [SerializeField]
+    private TextMeshProUGUI countDown;
+    [SerializeField]
+    private GameObject label;
+
     private void Awake ()
     {
         if(Instance == null)
@@ -51,7 +58,7 @@ public class TimeManager : MonoBehaviour
             Debug.LogError("Multiple Time Managers Detected! Only one should exist per scene.");
         }
 
-        remainingTime = maxRewindTime;
+        RemainingTime = maxRewindTime;
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.loop = true;
     }
@@ -71,7 +78,20 @@ public class TimeManager : MonoBehaviour
         if(!player.IsAlive)
         {
             Flow = Mathf.Clamp01(Mathf.SmoothDamp(Flow, 0, ref stopTimeVelocity, DeathScreen.deathTime));
+            label.SetActive(false);
+            countDown.text = "";
             return;
+        }
+
+        if(RemainingTime < maxRewindTime)
+        {
+            countDown.text = RemainingTime.ToString("00.0");
+            label.SetActive(true);
+        }
+        else
+        {
+            label.SetActive(false);
+            countDown.text = "";
         }
 
         if(!fireProjectile.CanFire())
@@ -85,21 +105,24 @@ public class TimeManager : MonoBehaviour
                 }
                 else
                 {
-                    remainingTime = maxLogTime;
+                    RemainingTime = maxLogTime;
                 }
 
                 timerTriggered = true;
             }
 
-            remainingTime -= Time.deltaTime;
+            if(Flow > 0.5f)
+            {
+                RemainingTime -= Time.deltaTime;
+            }
 
-            if (Input.GetKeyDown(KeyCode.LeftShift) || remainingTime <= 0)
+            if (Input.GetKeyDown(KeyCode.LeftShift) || RemainingTime <= 0)
             {
                 audioSource.Stop();
                 timerTriggered = false;
 
                 rewind = true;
-                remainingTime = maxRewindTime;
+                RemainingTime = maxRewindTime;
             }
         }
         else

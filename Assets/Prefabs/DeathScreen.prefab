@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 224cfb262fcb7274292bbc74177bae9c, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 437be60cc48def54fb544613b62156cb, type: 2}
   isGlobal: 1
   blendDistance: 0
   weight: 0
@@ -322,6 +322,8 @@ MonoBehaviour:
   player: {fileID: 0}
   volume: {fileID: 6058483849166087054}
   deathUI: {fileID: 6058483850365649951}
+  gameOverNoise: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!1 &6058483850365649950
 GameObject:
   m_ObjectHideFlags: 0
