@@ -53,13 +53,13 @@ public class FireProjectile : MonoBehaviour
             moveProjectile.Setup(direction, meshFilter.mesh, this);
         }
 
-        if (!canFire && moveProjectile.HasStopped())
-        {
-            if (Physics2D.Raycast(transform.position, (moveProjectile.transform.position - transform.position).normalized, pickupRange, pickup))
-            {
-                Pickup();
-            }
-        }
+        //if (!canFire && moveProjectile.HasStopped())
+        //{
+        //    if (Physics2D.Raycast(transform.position, (moveProjectile.transform.position - transform.position).normalized, pickupRange, pickup))
+        //    {
+        //        Pickup();
+        //    }
+        //}
     }
 
     public void Pickup()
