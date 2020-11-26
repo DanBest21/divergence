@@ -31,7 +31,6 @@ public class EnemyController : MonoBehaviour
 
     private Rewindable<Mode> mode;
 
-    [SerializeField]
     private Vector2 stationaryForward = Vector2.up;
     [SerializeField]
     private Vector2 stationaryTarget = Vector2.zero;
@@ -76,6 +75,8 @@ public class EnemyController : MonoBehaviour
 
     private void Awake ()
     {
+        stationaryForward = ((Vector2)(transform.rotation * Vector3.up)).normalized;
+
         characterController = GetComponent<CharacterController2D>();
         transformRewind = GetComponent<TransformRewind>();
         meshRenderer = GetComponent<MeshRenderer>();
@@ -90,7 +91,7 @@ public class EnemyController : MonoBehaviour
 
     private void Update ()
     {
-        if(Mathf.Abs(TimeManager.Instance.Flow) < 0.01f)
+        if(Mathf.Abs(TimeManager.Instance.Flow) < 0.1f)
         {
             return;
         }

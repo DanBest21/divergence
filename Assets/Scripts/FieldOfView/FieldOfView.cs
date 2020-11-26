@@ -155,6 +155,7 @@ public class FieldOfView : MonoBehaviour
         for (int i = 0; i < vertexCount - 1; i++)
         {
             vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+            vertices[i + 1].z = 0;
 
             maxX = Mathf.Max(maxX, vertices[i + 1].x);
             maxY = Mathf.Max(maxY, vertices[i + 1].y);

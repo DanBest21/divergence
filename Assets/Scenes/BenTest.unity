@@ -271,6 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxLogTime: 30
   fireProjectile: {fileID: 416727173}
+  player: {fileID: 1351969872}
 --- !u!4 &397630183
 Transform:
   m_ObjectHideFlags: 0
@@ -584,6 +585,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 705852952566447679, guid: d41178f0d2578314eadbcebbac04622c, type: 3}
   m_PrefabInstance: {fileID: 1170654795}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1351969872 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1945543330252939995, guid: 1f54deb17de0f70479ce5b8774e105af, type: 3}
+  m_PrefabInstance: {fileID: 1945543329122132082}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec8071fb1a1c5e47b15ae873bc0a91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1447131966
 GameObject:
   m_ObjectHideFlags: 0
