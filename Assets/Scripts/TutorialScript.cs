@@ -35,6 +35,7 @@ public class TutorialScript : MonoBehaviour
         aimLine.SetActive(false);
         text.text = "";
         door.SetActive(true);
+        text.text = "Level 01 - Knives and How To Throw Them";
     }
 
     // Update is called once per frame
@@ -59,6 +60,10 @@ public class TutorialScript : MonoBehaviour
 
     public void Trigger (BoxCollider2D trigger, int id)
     {
+        if(id == 0 && text.text == "Level 01 - Knives and How To Throw Them")
+        {
+            text.text = "";
+        }
         if(id == 1)
         {
             Debug.Log("Trigger1");
