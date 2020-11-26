@@ -13531,8 +13531,8 @@ MonoBehaviour:
   player: {fileID: 265291384}
   maxRewindTime: 10
   timerNoise: {fileID: 8300000, guid: c3b896c926dd563439927c4414183756, type: 3}
-  countDown: {fileID: 0}
-  label: {fileID: 0}
+  countDown: {fileID: 497864702}
+  label: {fileID: 281223021}
 --- !u!4 &1233214719
 Transform:
   m_ObjectHideFlags: 0
@@ -21469,7 +21469,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3000
   m_TargetDisplay: 0
 --- !u!224 &3057911493170077493
 RectTransform:

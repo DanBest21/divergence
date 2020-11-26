@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
@@ -44,7 +45,12 @@ public class DeathScreen : MonoBehaviour
                 
                 audioSource.clip = gameOverNoise;
                 audioSource.loop = false;
-                audioSource.Play();
+                try
+                {
+                    audioSource.Play();
+                }
+                catch(Exception) { }
+                
             }
         }
     }
