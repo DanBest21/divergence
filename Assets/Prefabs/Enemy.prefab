@@ -201,7 +201,7 @@ MonoBehaviour:
   skinWidth: 0.01
   collisionMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 768
 --- !u!114 &705852952566447618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +215,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultMode: 2
-  stationaryForward: {x: 0, y: 1}
   stationaryTarget: {x: 0, y: 0}
   patrolRoute: []
   destinationWaitTime: 3
@@ -227,6 +226,7 @@ MonoBehaviour:
   normalFovMaterial: {fileID: 2100000, guid: 7116797e02b9f194dad20c38a41d1efb, type: 2}
   pursuingFovMaterial: {fileID: 2100000, guid: 754a612996bfb3346840aeb15f1730b9, type: 2}
   inSightFovMaterial: {fileID: 2100000, guid: b3d981dc711087246bd8b1de8675be4e, type: 2}
+  killDistance: 1.1
 --- !u!114 &-5231898543639123658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,7 +246,7 @@ MonoBehaviour:
     m_Bits: 1024
   obstructions:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 768
   visiblePoints: []
   meshResolution: 0.25
   viewMeshFilter: {fileID: 1171315984}

@@ -45,7 +45,7 @@ public class NavGrid : MonoBehaviour
         walkableNodes = new bool[width, height];
 
         Vector2 boxSize = new Vector2(spacing, spacing) * collisionTestSize;
-        int mask = LayerMask.GetMask("Obstructions");
+        int mask = LayerMask.GetMask("Obstructions", "Solid");
 
         for(int i = 0; i < width; i++)
         {

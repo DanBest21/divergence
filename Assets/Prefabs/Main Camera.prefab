@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  smoothTime: 0.2
+  smoothTime: 0.1
   kickSpeed: 0
   kickSlowdown: 0
   kickReturn: 0
