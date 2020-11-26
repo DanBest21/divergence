@@ -57,7 +57,7 @@ public class MoveProjectile : MonoBehaviour
 
     void DrawProjectile()
     {
-        int layerMask = LayerMask.GetMask("Enemies", "Obstructions");
+        int layerMask = LayerMask.GetMask("Enemies", "Obstructions", "Targets");
         
         RaycastHit2D objectHit = Physics2D.Raycast(transform.position, direction, speed * Time.deltaTime, layerMask);
 
