@@ -250,14 +250,16 @@ public class EnemyController : MonoBehaviour
                 patrolIndex.Set((pi + 1) % patrolRoute.Count);
                 patrolLockCount = 0;
                 UpdatePath(patrolRoute[patrolIndex.Get()]);
+
             }
         }
         else
         {
             patrolLockCount = 0;
         }
+        lastPatrolPosition = transform.position;
 
-        
+
 
 
         Vector2 target = patrolRoute[pi];
@@ -285,7 +287,7 @@ public class EnemyController : MonoBehaviour
         }
 
         RotateToFaceMotion();
-        lastPatrolPosition = transform.position;
+
     }
 
     void PursuitUpdate ()
