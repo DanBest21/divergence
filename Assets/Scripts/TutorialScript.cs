@@ -24,6 +24,8 @@ public class TutorialScript : MonoBehaviour
 
     bool hasKnife = false;
 
+    public bool LearnedRewind { get; private set; } = false;
+
     readonly string throwPrompt = "Left click to throw";
     readonly string levelPrompt = "Level 01 - Tutorial";
     readonly string shiftPrompt = "Tap shift to rewind time";
@@ -60,6 +62,7 @@ public class TutorialScript : MonoBehaviour
             if(!fp.HitEnemy)
             {
                 text.text = shiftPrompt;
+                LearnedRewind = true;
             }
         }
 
@@ -87,6 +90,7 @@ public class TutorialScript : MonoBehaviour
         if(id == 2 && hasKnife)
         {
             text.text = shiftPrompt;
+            LearnedRewind = true;
         }
         if(id == 3)
         {
